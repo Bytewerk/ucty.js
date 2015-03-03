@@ -132,6 +132,12 @@ function init()
 	// of objects inside these squares
 	console.log("objects on map: "+map2.length);
 	console.log(JSON.stringify(global_map_edges));
+	
+	// [x0, y0, x1, y1]
+	var e = global_map_edges;
+	global_center_x = e[0] + (e[2] - e[0])/2;
+	global_center_y = e[1] + (e[3] - e[1])/2;
+	
 	draw();
 }
 

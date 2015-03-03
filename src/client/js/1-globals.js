@@ -5,14 +5,15 @@
 var global_enhanced_map;
 
 
-// TODO: Calculate these from the map!
-var global_center_x = 11.42434;
-var global_center_y = 48.76038;
+
+// TODO: Calculate from the map?
 var global_zoom = 20000;
 
 // gets set in the init function; format:
 // [x0, y0, x1, y1]
 var global_map_edges = [null, null, null, null];
+var global_center_x;
+var global_center_y;
 
 
 // TODO: do this in an init function
