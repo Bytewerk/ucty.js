@@ -1,4 +1,4 @@
-# µcty
+# µcty.js
 browser-compatible minimum space geographical maps proof of concept
 
 ## features
