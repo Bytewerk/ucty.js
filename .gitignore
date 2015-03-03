@@ -2,6 +2,7 @@ node_modules
 temp
 out
 input
+!input/README.md
 
 *.osm
 *.geojson
