@@ -1,5 +1,5 @@
 # µcty.js
-browser-compatible minimum space geographical maps proof of concept
+openstreetmap in a box (proof of concept)
 
 ## features
 * convert [`OSM`](http://openstreetmap.org) files into minimal a minimal, `LZMA` compressed and lossy format
