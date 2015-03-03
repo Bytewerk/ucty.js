@@ -138,6 +138,10 @@ function init()
 	global_center_x = e[0] + (e[2] - e[0])/2;
 	global_center_y = e[1] + (e[3] - e[1])/2;
 	
+	// make default zoom depend on the diagonal
+	global_zoom = Math.pow(Math.pow(e[2]-e[0],2)
+		+ Math.pow(e[3]-e[1],2),0.5) * 150000;
+	
 	draw();
 }
 
