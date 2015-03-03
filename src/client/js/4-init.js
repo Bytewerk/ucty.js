@@ -1,3 +1,74 @@
+"use strict";
+
+function init_enhance_line(entry)
+{
+	return {
+		line: true,
+		type: entry[0],
+		name: entry[1],
+		ctrx: entry[2][0],
+		ctry: entry[2][1],
+		size: entry[3]
+	};
+}
+
+function init_enhance_polygon(entry)
+{
+	var crds = entry[2];
+	var total_area = 0;
+	var centroid_x = 0;
+	var centroid_y = 0;
+	var centroid_i = 0;
+	
+	// centroid: http://en.wikipedia.org/wiki/Centroid#Of_a_finite_set_of_points
+	// http://stackoverflow.com/a/451482
+	for(var j=0; j<crds.length; j++)
+	{
+		var group = crds[j];
+		var area = 0;
+		for(var k=0;k<group.length;k++)
+		{
+			var x0 = group[k][0];
+			var y0 = group[k][1];
+			var x1,y1;
+			
+			// x1,y1 are either the next ones
+			// or the first ones.
+			if(group[k+1])
+			{
+				x1 = group[k+1][0];
+				y1 = group[k+1][1];
+			}
+			else
+			{
+				x1 = group[0][0];
+				y1 = group[0][1];
+			}
+			
+			area += x0 * y1 - x1 * y0;
+			
+			centroid_x += x0;
+			centroid_y += y0;
+			centroid_i++;
+		}
+		total_area += area / 2;
+	}
+	
+	centroid_x /= centroid_i;
+	centroid_y /= centroid_i;
+	
+	return {
+		line: false,
+		ctrx: centroid_x,
+		ctry: centroid_y,
+		size: total_area,
+		type: entry[0],
+		name: entry[1],
+		crds: entry[2],
+	};
+}
+
+
 /*
 	adds object size to each object, returns a struct like:
 	[{
@@ -16,90 +87,13 @@ function init_enhance_map()
 	// add the surface size to each map element
 	for(var i=0;i<map.length;i++)
 	{	
-		var crds = map[i][2];
-		var line = (typeof crds[0][0] == "number"); // bool
-		var width = map[i][3];
+		var is_line = (typeof map[i][2][0] == "number"); // bool
 		
+		var entry = is_line ? init_enhance_line(map[i])
+			: init_enhance_polygon(map[i]);
 		
-		var total_area = 0;
-		var centroid_x = 0;
-		var centroid_y = 0;
-		var centroid_i = 0;
-		
-		if(line)
-		{
-			// calculate line length
-			// http://www.mathopenref.com/coorddist.html
-			for(var j=0;j<crds.length-1;j++)
-			{
-				var x0 = crds[j][0];
-				var y0 = crds[j][1];
-				var x1 = crds[j+1][0];
-				var y1 = crds[j+1][1];
-				
-				total_area += Math.pow
-				(
-					Math.pow((x0-x1),2) + Math.pow((y0-y1),2), 0.5
-				);
-			}
-			total_area *= width / 40000;
-			
-			// don't calculate the real centroid, but use some
-			// point in the middle. should be good enough.
-			var middle = crds[Math.floor(crds.length / 2)];
-			centroid_x = middle[0];
-			centroid_y = middle[1];
-		}
-		else
-		{
-			// centroid: http://en.wikipedia.org/wiki/Centroid#Of_a_finite_set_of_points
-			// http://stackoverflow.com/a/451482
-			for(var j=0; j<crds.length; j++)
-			{
-				var group = crds[j];
-				var area = 0;
-				for(var k=0;k<group.length;k++)
-				{
-					var x0 = group[k][0];
-					var y0 = group[k][1];
-					var x1,y1;
-					
-					// x1,y1 are either the next ones
-					// or the first ones.
-					if(group[k+1])
-					{
-						x1 = group[k+1][0];
-						y1 = group[k+1][1];
-					}
-					else
-					{
-						x1 = group[0][0];
-						y1 = group[0][1];
-					}
-					
-					area += x0 * y1 - x1 * y0;
-					
-					centroid_x += x0;
-					centroid_y += y0;
-					centroid_i++;
-				}
-				total_area += area / 2;
-			}
-			
-			centroid_x /= centroid_i;
-			centroid_y /= centroid_i;
-		}
-		ret.push
-		({
-			line: line, // bool
-			ctrx: centroid_x,
-			ctry: centroid_y,
-			size: total_area,
-			type: map[i][0],
-			name: map[i][1],
-			crds: map[i][2],
-			width: width
-		});
+		if(i<100 && is_line) console.log(entry);
+		ret.push(entry);
 	}
 	return ret;
 }

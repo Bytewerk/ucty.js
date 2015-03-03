@@ -8,20 +8,27 @@ var map = [
 	...
 ];
 
-
+// polynom:
 
 var ucty_entry =
 [
-	ucty_type,
-	ucty_caption,
-	ucty_coords
-	[width - only for linestrings!]
+	"building",
+	"some caption here",
+	[ [[x,y], ...], [[x,y], ...], ... ]
 ];
 
-Linestrings and Polygons differ in the coords array.
 
-Linestring coords:
-[x,y], [x,y], [x,y], ...
+// linestring: (street)
 
-Polygon coords are grouped:
-[[x,y], ...], [[x,y], ...], ...
+var ucty_entry =
+[
+	"street",
+	"some caption here",
+	[x, y] // just the center coordinates
+	area_size
+];
+
+
+find the difference with:
+is_linestring = (typeof ucty_entry[2][0] == "number");
+

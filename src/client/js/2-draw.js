@@ -29,8 +29,8 @@ function draw_line_street(w)
 	global_c2.lineWidth = width;
 }
 
-function draw_group(group, name, line /*bool*/, width)
-{	
+function draw_group(group, name)
+{
 	global_c2.beginPath();
 	
 	for(var k=0;k<group.length;k++)
@@ -42,31 +42,15 @@ function draw_group(group, name, line /*bool*/, width)
 		else	global_c2.lineTo(x,y);
 	}
 	
-	if(!x) console.log("error while drawing: "+name);
+	// if(!x) console.log("error while drawing: "+name);
 	
 	global_c2.closePath();
-	if(!line) global_c2.fill();
+	global_c2.fill();
 	
-	if(line) draw_line_street(width);
-	else draw_line_reset();
-	
-	if(line || global_zoom > 100000)
+	if(global_zoom > 100000)
+	{
+		draw_line_reset();
 		global_c2.stroke();
-}
-
-function draw_lines(count)
-{
-	for(var i=0;i<count;i++)
-	{	
-		var entry = global_enhanced_map[i];
-		if(typeof entry.crds[0][0] != "number") continue;
-		
-		
-		global_c2.strokeStyle = global_colors[entry.type]
-			|| global_colors["default"];
-		global_c2.globalAlpha = 0.3;
-		
-		draw_group(entry.crds, entry.name, true, entry.width);
 	}
 }
 
@@ -75,9 +59,7 @@ function draw_polygons(count)
 	for(var i=0;i<count;i++)
 	{	
 		var entry = global_enhanced_map[i];
-		if(typeof entry.crds[0][0] == "number") continue;
-		
-		if(entry.type == "area") continue;
+		if(entry.line || entry.type == "area") continue;
 		
 		global_c2.fillStyle   = global_colors[entry.type]
 			|| global_colors["default"];
@@ -90,14 +72,14 @@ function draw_polygons(count)
 
 function draw_labels(count)
 {
+	global_c2.strokeStyle = "black";
+	global_c2.lineWidth = 1;
+	
 	for(var i=0;i<count;i++)
 	{
 		var entry = global_enhanced_map[i];
 		if(!entry.name) continue;
-		
-		global_c2.strokeStyle = "black";
-		global_c2.lineWidth = 1;
-		
+			
 		var name = entry.name;
 		if(name.length > 10)
 			name = name.substr(0,10)+".";
@@ -121,7 +103,7 @@ function draw()
 	
 	var entries  = global_enhanced_map;
 	
-	// objects total - FIXME
+	// objects total
 	var obj_count = global_zoom / 30 + 500;
 	if(obj_count > entries.length) obj_count = entries.length;
 	
@@ -130,7 +112,6 @@ function draw()
 	if(global_zoom > 200000 || label_count > entries.length)
 		label_count = entries.length;
 	
-	// draw_lines(obj_count);
 	draw_polygons(obj_count);
 	draw_labels(label_count);
 	
