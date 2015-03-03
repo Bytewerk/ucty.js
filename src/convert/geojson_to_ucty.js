@@ -15,6 +15,10 @@
 	npm install mathjs osmtogeojson
 */
 
+// TODO: put this somewhere else?
+var cfg_precision = 5;
+
+
 if(process.argv.length < 4)
 {
 	console.log("Syntax: "+process.argv[0]+" "
@@ -22,33 +26,13 @@ if(process.argv.length < 4)
 	process.exit(1);
 }
 
-var fs      = require("fs");
-var file	= process.argv[2];
-var math	= require("mathjs");
-
-// config
-var cfg_precision = 5;
-var cfg_precision_line = 4;
-// config end
+var fs   = require("fs");
+var file = process.argv[2];
+var calc = require("./calc.js");
 
 
 console.log("loading map "+file+"...");
 var input	= JSON.parse(fs.readFileSync(file));
-
-// recursively round all members of obj
-function round(obj, precision)
-{
-	if(typeof obj == "number")
-	{
-		return math.round(obj, precision);
-	}
-	else
-	{
-		for(var i=0;i<obj.length;i++)
-			obj[i] = round(obj[i], precision);
-		return obj;
-	}
-}
 
 
 console.log("converting to µcty format...");
@@ -60,6 +44,7 @@ for(i=0;i<input.features.length;i++)
 	var feature = input.features[i];
 	var prop = feature.properties;
 	var line = feature.geometry.type == "LineString";
+	
 	
 	// skip bus stops etc.
 	if(feature.geometry.type == "Point")
@@ -74,12 +59,15 @@ for(i=0;i<input.features.length;i++)
 		|| (prop.highway ? "street" : "")
 		|| prop.type
 		|| "";
+		
+	// FIXME: attach missing numbers to buildings,
+	// which are stored as "Point"
 	var ucty_caption = prop.name
 		||  prop["addr:housenumber"]
 		|| "";
 	
-	var ucty_coords = round(feature.geometry.coordinates,
-		line ? cfg_precision_line : cfg_precision);
+	var ucty_coords = calc.round(feature.geometry.coordinates,
+		cfg_precision);
 	
 	var ucty_entry =
 	[

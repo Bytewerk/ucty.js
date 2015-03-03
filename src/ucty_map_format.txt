@@ -1,0 +1,27 @@
+this is the minimal JSON format, that will get compressed. Don't confuse this with the enhanched map format after the client-side init.
+
+
+
+var map = [
+	ucty_entry_1,
+	ucty_entry_2,
+	...
+];
+
+
+
+var ucty_entry =
+[
+	ucty_type,
+	ucty_caption,
+	ucty_coords
+	[width - only for linestrings!]
+];
+
+Linestrings and Polygons differ in the coords array.
+
+Linestring coords:
+[x,y], [x,y], [x,y], ...
+
+Polygon coords are grouped:
+[[x,y], ...], [[x,y], ...], ...
