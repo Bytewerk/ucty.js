@@ -22,14 +22,15 @@ du -c out/ucty.bin out/ucty.js
 # of the stats. A new file gets created whenever
 # the repo doesn't have any changes and a stats
 # file of the current revision doesn't exist yet.
-if [ -d "stats" ] \
-	&& git diff-index --quiet HEAD -- \
-	&& "$1" == ""
-then
-	output="stats/$(git rev-parse HEAD).txt"
-	date > "$output"
-	$0 "savingoutput" > "$output"
-	
-	echo "--------------------"
-	echo "=> Stats saved to: $output"
-fi
+[ ! -d "stats" ] && exit 0
+git diff-index --quiet HEAD -- || exit 0
+[ "$1" != "" ] && exit 0
+
+output="stats/$(git rev-parse HEAD).txt"
+[ -e "$output" ] && exit 0
+
+date > "$output"
+$0 "savingoutput" > "$output"
+
+echo "--------------------"
+echo "=> Stats saved to: $output"
