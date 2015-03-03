@@ -1,21 +1,11 @@
-# HOWTO:
-# - Save the map you want to convert as 'input/map.osm' first!
-# - Install all dependencies with npm in this folder:
-# 	npm install osmtogeojson mathjs uglify-js
-#
-
-
 #
 # CONFIGURATION
 #
-
-
-source= http://overpass-api.de/api/map?bbox=11.3988,48.7531,11.4512,48.7735
+source = http://overpass-api.de/api/map?bbox=11.3988,48.7531,11.4512,48.7735
 node   = "/bin/node"
 osm2gj = "./node_modules/osmtogeojson/osmtogeojson"
 uglify = "./node_modules/uglify-js/bin/uglifyjs"
 uflags = "--mangle --compress"
-
 
 
 
@@ -29,6 +19,8 @@ all: out/ucty.bin out/ucty.js out/index_example.html
 
 clean:
 	rm -r temp out || true
+
+
 
 #
 # OUTPUT FOLDER
@@ -73,6 +65,8 @@ temp/ucty_map.js: temp/map.geojson src/convert/geojson_to_ucty.js
 temp/map.geojson : input/map.osm
 	mkdir -p temp
 	$(osm2gj) input/map.osm > temp/map.geojson
+
+
 
 #
 # INPUT FOLDER
