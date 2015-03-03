@@ -15,7 +15,7 @@ uflags = "--mangle --compress"
 .PHONY: all clean
 
 all: out/ucty.bin out/ucty.js out/index_example.html
-	du -c -h out/ucty*
+	src/stats.sh
 
 clean:
 	rm -r temp out || true
