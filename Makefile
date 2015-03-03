@@ -4,10 +4,19 @@
 # 	npm install osmtogeojson mathjs uglify-js
 #
 
+
+#
+# CONFIGURATION
+#
+
+
+source= http://overpass-api.de/api/map?bbox=11.3988,48.7531,11.4512,48.7735
 node   = "/bin/node"
 osm2gj = "./node_modules/osmtogeojson/osmtogeojson"
 uglify = "./node_modules/uglify-js/bin/uglifyjs"
 uflags = "--mangle --compress"
+
+
 
 
 #
@@ -70,5 +79,4 @@ temp/map.geojson : input/map.osm
 #
 
 input/map.osm:
-	$(info ERROR: Export the map you want to shrink from openstreetmap.org and save it as input/map.osm!)
-	exit 1
+	curl -o input/map.osm $(source)

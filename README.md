@@ -8,8 +8,7 @@ openstreetmap in a box (proof of concept)
 
 ## status
 * this is the work of three days or so, don't expect all the features that you know from the normal open street map or google maps pages! Adding all of them isn't a goal either, as the output is optimized for file size.
-* map size is limited by what the openstreetmap page can export right now
-* streets aren't displayed at all
+* streets are only displayed as text. this will probably not change, orientation with the buildings seems to be enough.
 
 ## minimalism
 |OSM Size|µcty map incl. HTML5 client|
@@ -22,6 +21,5 @@ Make sure that you have installed the latest `nodejs`. Then issue the following 
 git clone https://github.com/robotanarchy/ucty.js.git
 cd ucty.js
 npm install osmtogeojson uglify mathjs
-# (copy your map file to input/map.osm)
 make
 ```
