@@ -50,6 +50,10 @@ function init_enhance_polygon(entry)
 			centroid_x += x0;
 			centroid_y += y0;
 			centroid_i++;
+			
+			// we are already iterating over all points,
+			// so find the edges, too:
+			init_find_edges(x0, y0);
 		}
 		total_area += area / 2;
 	}
@@ -98,9 +102,20 @@ function init_enhance_map()
 	return ret;
 }
 
+var init_find_edges = function(x, y)
+{
+	var e = global_map_edges;
+	
+	if(!e[0] || x < e[0]) e[0] = x;
+	if(!e[2] || x > e[2]) e[2] = x;
+	if(!e[1] || y < e[1]) e[1] = y;
+	if(!e[3] || y > e[3]) e[3] = y;
+	
+	global_map_edges = e;
+};
 
 function init()
-{
+{	
 	var map2 = init_enhance_map();
 	
 	// sort all maps by size, biggest first
@@ -116,7 +131,7 @@ function init()
 	// TODO: divide map in squares and get all IDs
 	// of objects inside these squares
 	console.log("objects on map: "+map2.length);
-	
+	console.log(JSON.stringify(global_map_edges));
 	draw();
 }
 

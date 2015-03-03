@@ -10,6 +10,10 @@ var global_center_x = 11.42434;
 var global_center_y = 48.76038;
 var global_zoom = 20000;
 
+// gets set in the init function; format:
+// [x0, y0, x1, y1]
+var global_map_edges = [null, null, null, null];
+
 
 // TODO: do this in an init function
 var global_info   = document.getElementById("info");
