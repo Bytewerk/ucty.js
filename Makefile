@@ -45,6 +45,7 @@ out/ucty.js: temp/unlzma.js
 temp/unlzma.js: src/client/decompress.js src/lzma-js/lzma-d-min.js
 	mkdir -p temp
 	cat src/lzma-js/lzma-d-min.js src/client/decompress.js > temp/unlzma.js
+	sed -i 's/"use strict";//g' temp/unlzma.js
 
 # TODO: add enclose option
 temp/ucty_client_and_map.ugly: temp/ucty_client_and_map.js
