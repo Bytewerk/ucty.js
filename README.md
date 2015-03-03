@@ -11,7 +11,17 @@ browser-compatible minimum space geographical maps proof of concept
 * map size is limited by what the openstreetmap page can export right now
 * streets aren't displayed at all
 
-## minimal?
-|OSM Size|µcty map, including the HTML5 client|
+## minimalism
+|OSM Size|µcty map incl. HTML5 client|
 ---------|---------------------------------
 |10 MB| <150 KB|
+
+## usage
+Make sure that you have installed the latest `nodejs`. Then issue the following commands:
+```shell
+git clone https://github.com/robotanarchy/ucty.js.git
+cd ucty.js
+npm install osmtogeojson uglify mathjs
+# (copy your map file to input/map.osm)
+make
+```
