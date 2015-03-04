@@ -2,7 +2,7 @@
 openstreetmap in a box (proof of concept)
 
 ## demo
-[Here.](http://ucty.oakey-dev.eu/) You can zoom in by scrolling with the mouse (or press `+` and `-`) and navigate with the arrow keys. Works in Firefox and Chromium.
+[Here.](http://ucty.oakey-dev.eu/) You can zoom in by scrolling with the mouse (or press `+` and `-`) and navigate with the arrow keys. Works in Firefox and Chromium. Zoom in closely, and you'll see address numbers and street names.
 
 ## features
 * convert [`OSM`](http://openstreetmap.org) files into minimal a minimal, `LZMA` compressed and lossy format
