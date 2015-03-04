@@ -1,6 +1,9 @@
 # µcty.js
 openstreetmap in a box (proof of concept)
 
+## demo
+[Here.](http://ucty.oakey-dev.eu/) You can zoom in by scrolling with the mouse (or press `+` and `-`) and navigate with the arrow keys.
+
 ## features
 * convert [`OSM`](http://openstreetmap.org) files into minimal a minimal, `LZMA` compressed and lossy format
 * view the whole map in your browser with a tiny `HTML5` canvas based client
