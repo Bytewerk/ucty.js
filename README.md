@@ -2,7 +2,7 @@
 openstreetmap in a box (proof of concept)
 
 ## demo
-[Here.](http://ucty.oakey-dev.eu/) You can zoom in by scrolling with the mouse (or press `+` and `-`) and navigate with the arrow keys.
+[Here.](http://ucty.oakey-dev.eu/) You can zoom in by scrolling with the mouse (or press `+` and `-`) and navigate with the arrow keys. Works in Firefox and Chromium.
 
 ## features
 * convert [`OSM`](http://openstreetmap.org) files into minimal a minimal, `LZMA` compressed and lossy format
@@ -21,7 +21,7 @@ openstreetmap in a box (proof of concept)
 ## usage
 Make sure that you have installed the latest `nodejs`. Then issue the following commands:
 ```shell
-git clone https://github.com/robotanarchy/ucty.js.git
+git clone https://github.com/Bytewerk/ucty.js.git
 cd ucty.js
 npm install osmtogeojson uglify mathjs
 make
