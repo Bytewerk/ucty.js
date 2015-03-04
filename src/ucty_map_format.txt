@@ -1,4 +1,4 @@
-this is the minimal JSON format, that will get compressed. Don't confuse this with the enhanched map format after the client-side init.
+this is the minimal JSON format, that will get compressed. Don't confuse this with the enhanced map format after the client-side init.
 
 
 
