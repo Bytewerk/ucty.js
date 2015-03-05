@@ -149,20 +149,16 @@ function draw_labels()
 	{
 		var entry = global_labels[i];
 		
-		if(!entry.name
+		if(!entry.short
 			|| coord_is_off_screen(entry.ctrx,entry.ctry))
 				continue;
 			
-		var name = entry.name;
-		if(name.length > 10)
-			name = name.substr(0,10)+".";
-		
 		if(entry.type == "street")
 			global_c2.globalAlpha = 0.5;
 		else
 			global_c2.globalAlpha = 1.0;
 		
-		global_c2.strokeText(name,
+		global_c2.strokeText(entry.short,
 			draw_x(entry.ctrx),
 			draw_y(entry.ctry)
 		);

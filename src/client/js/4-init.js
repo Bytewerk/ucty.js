@@ -106,6 +106,11 @@ function init_enhance_map()
 		var entry = is_line ? init_enhance_line(map[i])
 			: init_enhance_polygon(map[i]);
 		
+		if(entry.name)
+			entry.short =  entry.name.length > 10
+				? entry.name.substr(0,10)+"."
+				: entry.name;
+		
 		ret.push(entry);
 	}
 	return ret;
