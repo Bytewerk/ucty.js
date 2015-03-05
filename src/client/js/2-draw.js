@@ -61,6 +61,7 @@ function draw_polygons()
 	{	
 		var entry = global_polys[i];
 		if(entry.line || entry.type == "area") continue;
+		if(drawn >= global_max_polys && entry.type != "water") continue;
 		
 		
 		// estimate if the polygon is visible
@@ -92,8 +93,6 @@ function draw_polygons()
 		*/
 		
 		drawn++;
-		if(drawn == global_max_polys)
-			break;
 	}
 	return drawn;
 }
