@@ -12,8 +12,29 @@ var conv_entry = require("./convert_entry.js");
 console.log("loading map "+file+"...");
 var input	= JSON.parse(fs.readFileSync(file));
 
+// create a list of address-points here, so we can
+// label polygons, that do not have a label yet
+var points = [];
+for(var i=0;i<input.features.length;i++)
+{
+	var feat = input.features[i];
+	var geo = feat.geometry;
+	if(geo.type != "Point") continue;
+	
+	var prop = feat.properties;
+	var label = conv_entry.addr(prop);
+	
+	if(!label) continue;
+	
+	points.push
+	({
+		label: label,
+		x: geo.coordinates[0],
+		y: geo.coordinates[1]
+	});
+}
 
-// TODO: create an optimized list of points here
+
 
 
 console.log("converting to µcty format...");
@@ -31,7 +52,7 @@ for(var i=0;i<input.features.length;i++)
 		continue;
 	
 	var entry = is_line ? conv_entry.line(feat)
-		: conv_entry.polygon(feat);
+		: conv_entry.polygon(feat, points);
 	if(entry) output.push(entry);
 }
 
