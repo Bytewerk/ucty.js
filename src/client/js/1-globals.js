@@ -9,11 +9,16 @@ var global_enhanced_map;
 // TODO: Calculate from the map?
 var global_zoom = 20000;
 
-// gets set in the init function; format:
+// set by init();
 // [x0, y0, x1, y1]
 var global_map_edges = [null, null, null, null];
 var global_center_x;
 var global_center_y;
+
+
+// set by draw_calc_boundaries()
+// [x0, y0, x1, y1]
+var global_screen_edges = [null, null, null, null];
 
 
 // TODO: do this in an init function

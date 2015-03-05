@@ -1,5 +1,10 @@
 "use strict";
 
+
+// TODO: split up the enhanced map array
+// in polygons and labels, so we don't need
+// to do that in the draw functions!
+
 function init_enhance_line(entry)
 {
 	return {
@@ -19,6 +24,7 @@ function init_enhance_polygon(entry)
 	var centroid_x = 0;
 	var centroid_y = 0;
 	var centroid_i = 0;
+	var bbox = [null,null,null,null]; // bounding box
 	
 	// centroid: http://en.wikipedia.org/wiki/Centroid#Of_a_finite_set_of_points
 	// http://stackoverflow.com/a/451482
@@ -32,6 +38,13 @@ function init_enhance_polygon(entry)
 			var y0 = group[k][1];
 			var x1,y1;
 			
+			// calculate the bounding box:
+			if(bbox[0] === null || x0 < bbox[0]) bbox[0] = x0;
+			if(bbox[1] === null || y0 < bbox[1]) bbox[1] = y0;
+			if(bbox[2] === null || x0 > bbox[2]) bbox[2] = x0;
+			if(bbox[3] === null || y0 > bbox[3]) bbox[3] = y0;
+			
+			// calculate the centroid:
 			// x1,y1 are either the next ones
 			// or the first ones.
 			if(group[k+1])
@@ -69,6 +82,7 @@ function init_enhance_polygon(entry)
 		type: entry[0],
 		name: entry[1],
 		crds: entry[2],
+		bbox: bbox
 	};
 }
 
@@ -82,6 +96,7 @@ function init_enhance_polygon(entry)
 		type:
 		name:
 		crds: // coordinates
+		bbox: // polygon bounding box: [x0,y0,x1,y1]
 	}, ... ]
 */
 function init_enhance_map()
@@ -96,7 +111,6 @@ function init_enhance_map()
 		var entry = is_line ? init_enhance_line(map[i])
 			: init_enhance_polygon(map[i]);
 		
-		if(i<100 && is_line) console.log(entry);
 		ret.push(entry);
 	}
 	return ret;
@@ -127,11 +141,6 @@ function init()
 	});
 	
 	global_enhanced_map = map2;
-	
-	// TODO: divide map in squares and get all IDs
-	// of objects inside these squares
-	console.log("objects on map: "+map2.length);
-	console.log(JSON.stringify(global_map_edges));
 	
 	// [x0, y0, x1, y1]
 	var e = global_map_edges;
