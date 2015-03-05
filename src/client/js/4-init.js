@@ -90,6 +90,7 @@ function init_enhance_polygon(entry)
 		size:
 		type:
 		name:
+		short: // short number, such as the house number
 		crds: // coordinates
 		bbox: // polygon bounding box: [x0,y0,x1,y1]
 	}, ... ]
@@ -163,7 +164,7 @@ function init()
 {	
 	var map2 = init_enhance_map();
 	
-	// sort all maps by size, biggest first
+	// sort all objects by size, biggest first
 	map2.sort(function(a,b)
 	{
 		if(a.size > b.size) return -1
@@ -178,7 +179,7 @@ function init()
 	global_center_x = e[0] + (e[2] - e[0])/2;
 	global_center_y = e[1] + (e[3] - e[1])/2;
 	
-	// make default zoom depend on the diagonal
+	// make default zoom depend on the diagonal length
 	global_zoom = Math.pow(Math.pow(e[2]-e[0],2)
 		+ Math.pow(e[3]-e[1],2),0.5) * 150000;
 	
