@@ -4,6 +4,7 @@
 
 var global_enhanced_map;
 
+var global_max_labels = 20;
 
 
 // TODO: Calculate from the map?

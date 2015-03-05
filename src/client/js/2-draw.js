@@ -142,13 +142,13 @@ function coord_is_off_screen(x,y)
 		|| y < se[1] || y > se [3];
 }
 
-function draw_labels(count)
+function draw_labels()
 {
 	global_c2.strokeStyle = "black";
 	global_c2.lineWidth = 1;
 	var drawn = 0;
 	
-	for(var i=0;i<count;i++)
+	for(var i=0;i<global_enhanced_map.length;i++)
 	{
 		var entry = global_enhanced_map[i];
 		
@@ -171,6 +171,9 @@ function draw_labels(count)
 		);
 		
 		drawn++;
+		
+		// hard limit
+		if(drawn == global_max_labels)	break;
 	}
 	return drawn;
 }
@@ -186,13 +189,8 @@ function draw()
 	var obj_count = global_zoom / 30 + 500;
 	if(obj_count > entries.length) obj_count = entries.length;
 	
-	// labels total
-	var label_count = global_zoom / 300 + 10;
-	if(global_zoom > 200000 || label_count > entries.length)
-		label_count = entries.length;
-	
 	var obj_drawn = draw_polygons(obj_count);
-	var label_drawn = draw_labels(label_count);
+	var label_drawn = draw_labels();
 	
 	
 	// be nice and draw copyright info for OSM:
@@ -207,7 +205,7 @@ function draw()
 		+ "Center Y: "+global_center_y+"\n"
 		+ "Zoom:     "+global_zoom+"\n\n"
 		+ "Objects:  "+obj_drawn+"/"+Math.floor(obj_count)+"/"+entries.length+"\n"
-		+ "Labels:   "+label_drawn+"/"+Math.floor(label_count);
+		+ "Labels:   "+label_drawn;
 		
 	draw_calc_boundaries();
 }
