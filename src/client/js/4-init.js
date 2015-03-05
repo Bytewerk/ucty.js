@@ -1,10 +1,5 @@
 "use strict";
 
-
-// TODO: split up the enhanced map array
-// in polygons and labels, so we don't need
-// to do that in the draw functions!
-
 function init_enhance_line(entry)
 {
 	return {

@@ -31,13 +31,57 @@ function mouse_to_geo(e)
 	return [geo_x, geo_y];
 }
 
+// arguments must be geo coords
+function full_label(x, y)
+{
+	var ret = [];
+	
+	var add = function(entry)
+	{
+		var label = entry.name;
+		if(ret.indexOf(label) == -1)
+			ret.push(label);
+	}
+	
+	// iterate over all labels,
+	// find the ones that are at the mouse position
+	// (or very near) and add all of them to the
+	// ret array
+	for(var i=0;i<global_labels.length;i++)
+	{
+		var entry = global_labels[i];
+		
+		if(entry.line)
+		{
+			// FIXME: the entry.size is too small!
+			var x0 = entry.ctrx - entry.size/2;
+			var y0 = entry.ctry - entry.size/2;
+			var x1 = entry.ctrx + entry.size/2;
+			var y1 = entry.ctry + entry.size/2;
+			
+			if( x > x0 && x < x1
+			 && y > y0 && y < y1)
+				add(entry);
+		}
+		else
+		{
+			var bb = entry.bbox;
+			if( x > bb[0] && x < bb[2]
+			 && y > bb[1] && y < bb[3])
+				add(entry);
+		}
+	}
+	return ret;
+}
+
 global_canvas.onmousemove = function(e)
 {	
 	var geo = mouse_to_geo(e);
 	
 	global_info.innerHTML=
 		"Mouse X:  " + geo[0] + "\n" +
-		"Mouse Y:  " + geo[1]
+		"Mouse Y:  " + geo[1] + "\n" +
+		full_label(geo[0], geo[1]);
 	;
 }
 
