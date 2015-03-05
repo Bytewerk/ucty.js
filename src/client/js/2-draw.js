@@ -57,9 +57,9 @@ function draw_group(group, name)
 function draw_polygons()
 {
 	var drawn = 0;
-	for(var i=0;i<global_enhanced_map.length;i++)
+	for(var i=0;i<global_polys.length;i++)
 	{	
-		var entry = global_enhanced_map[i];
+		var entry = global_polys[i];
 		if(entry.line || entry.type == "area") continue;
 		
 		
@@ -145,9 +145,9 @@ function draw_labels()
 	global_c2.lineWidth = 1;
 	var drawn = 0;
 	
-	for(var i=0;i<global_enhanced_map.length;i++)
+	for(var i=0;i<global_labels.length;i++)
 	{
-		var entry = global_enhanced_map[i];
+		var entry = global_labels[i];
 		
 		if(!entry.name
 			|| coord_is_off_screen(entry.ctrx,entry.ctry))
@@ -180,7 +180,6 @@ function draw()
 	global_c2.clearRect(0,0,global_canvas.width,global_canvas.height);
 	draw_calc_boundaries();
 	
-	var entries  = global_enhanced_map;
 	var obj_drawn = draw_polygons();
 	var label_drawn = draw_labels();
 	
@@ -196,8 +195,8 @@ function draw()
 		= "Center X: "+global_center_x+"\n"
 		+ "Center Y: "+global_center_y+"\n"
 		+ "Zoom:     "+global_zoom+"\n\n"
-		+ "Objects:  "+obj_drawn+"/"+entries.length+"\n"
-		+ "Labels:   "+label_drawn;
+		+ "Objects:  "+obj_drawn+"/"+global_polys.length+"\n"
+		+ "Labels:   "+label_drawn+"/"+global_labels.length;
 		
 	draw_calc_boundaries();
 }

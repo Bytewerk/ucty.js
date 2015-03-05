@@ -116,6 +116,22 @@ function init_enhance_map()
 	return ret;
 }
 
+// split into labels and polygons
+function init_split_enhanced_map()
+{
+	var map2 = global_enhanced_map;
+	for(var i=0;i<map2.length;i++)
+	{
+		var entry = map2[i];
+		
+		if(!entry.line)
+			global_polys.push(entry);
+		
+		if(entry.name)
+			global_labels.push(entry);
+	}
+}
+
 var init_find_edges = function(x, y)
 {
 	var e = global_map_edges;
@@ -150,6 +166,8 @@ function init()
 	// make default zoom depend on the diagonal
 	global_zoom = Math.pow(Math.pow(e[2]-e[0],2)
 		+ Math.pow(e[3]-e[1],2),0.5) * 150000;
+	
+	init_split_enhanced_map();
 	
 	draw();
 }

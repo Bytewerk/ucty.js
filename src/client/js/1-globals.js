@@ -3,19 +3,18 @@
 // the variable 'map' is currently also global. It does not have a prefix.
 
 var global_enhanced_map;
+var global_polys = [];
+var global_labels = [];
 
 var global_max_labels = 20;
 var global_max_polys  = 300;
-
-
-// TODO: Calculate from the map?
-var global_zoom = 20000;
 
 // set by init();
 // [x0, y0, x1, y1]
 var global_map_edges = [null, null, null, null];
 var global_center_x;
 var global_center_y;
+var global_zoom;
 
 
 // set by draw_calc_boundaries()
