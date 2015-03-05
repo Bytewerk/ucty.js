@@ -112,7 +112,14 @@ function init_enhance_map()
 			// house numbers, if the label looks like
 			// "address number"
 			if(new RegExp(/.* [0-9]+[0-9\/a-z]*/).test(entry.name))
-				entry.short = entry.name.substr(entry.name.lastIndexOf(' '));
+			{
+				// check for numbers like '1 1/2'. These should not be split
+				// after the last space!
+				var regex = new RegExp(/ [1-9]+ [1-9a-z]+\/[1-9]+/).exec(entry.name);
+				if(regex) entry.short = regex[0].trim();
+				else
+					entry.short = entry.name.substr(entry.name.lastIndexOf(' '));
+			}
 			else
 				entry.short =  entry.name.length > 10
 					? entry.name.substr(0,10)+"."
