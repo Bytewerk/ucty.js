@@ -38,6 +38,17 @@ exports.line = function(feat)
 	];
 }
 
+function addr(prop)
+{
+	if(prop["addr:street"] && prop["addr:housenumber"])
+		return prop["addr:street"] + " " + prop["addr:housenumber"];
+	if(prop["addr:street"])
+		return prop["addr:street"];
+	if(prop["addr:housenumber"])
+		return prop["addr:housenumber"];
+	
+	return "";
+}
 
 exports.polygon = function(feat)
 {
@@ -53,8 +64,7 @@ exports.polygon = function(feat)
 	// FIXME: attach missing numbers to buildings,
 	// which are stored as "Point"
 	var caption = prop.name
-		||  prop["addr:housenumber"]
-		|| "";
+		|| addr(prop);
 	
 	var coords = calc.round(feat.geometry.coordinates,
 		cfg_precision);

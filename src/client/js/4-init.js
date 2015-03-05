@@ -107,9 +107,17 @@ function init_enhance_map()
 			: init_enhance_polygon(map[i]);
 		
 		if(entry.name)
-			entry.short =  entry.name.length > 10
-				? entry.name.substr(0,10)+"."
-				: entry.name;
+		{
+			// in the short form, only display
+			// house numbers, if the label looks like
+			// "address number"
+			if(new RegExp(/.* [0-9]+[0-9\/a-z]*/).test(entry.name))
+				entry.short = entry.name.substr(entry.name.lastIndexOf(' '));
+			else
+				entry.short =  entry.name.length > 10
+					? entry.name.substr(0,10)+"."
+					: entry.name;
+		}
 		
 		ret.push(entry);
 	}
