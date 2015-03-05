@@ -54,27 +54,22 @@ function draw_group(group, name)
 	}
 }
 
-function draw_polygons(count)
+function draw_polygons()
 {
 	var drawn = 0;
-	var skipped = 0;
-	for(var i=0;i<count;i++)
+	for(var i=0;i<global_enhanced_map.length;i++)
 	{	
 		var entry = global_enhanced_map[i];
 		if(entry.line || entry.type == "area") continue;
 		
 		
 		// estimate if the polygon is visible
-		// TODO: this seems to always skip?
 		var se = global_screen_edges;
 		var bb  = entry.bbox;
 		
 		if(bb[0] > se[2] || bb[1] > se[3]
 			|| bb[2] < se[0] || bb[3] < se[1] )
-		{
-			skipped++;
 			continue;
-		}
 		
 		global_c2.fillStyle   = global_colors[entry.type]
 			|| global_colors["default"];
@@ -97,6 +92,8 @@ function draw_polygons(count)
 		*/
 		
 		drawn++;
+		if(drawn == global_max_polys)
+			break;
 	}
 	return drawn;
 }
@@ -184,12 +181,7 @@ function draw()
 	draw_calc_boundaries();
 	
 	var entries  = global_enhanced_map;
-	
-	// objects total
-	var obj_count = global_zoom / 30 + 500;
-	if(obj_count > entries.length) obj_count = entries.length;
-	
-	var obj_drawn = draw_polygons(obj_count);
+	var obj_drawn = draw_polygons();
 	var label_drawn = draw_labels();
 	
 	
@@ -204,7 +196,7 @@ function draw()
 		= "Center X: "+global_center_x+"\n"
 		+ "Center Y: "+global_center_y+"\n"
 		+ "Zoom:     "+global_zoom+"\n\n"
-		+ "Objects:  "+obj_drawn+"/"+Math.floor(obj_count)+"/"+entries.length+"\n"
+		+ "Objects:  "+obj_drawn+"/"+entries.length+"\n"
 		+ "Labels:   "+label_drawn;
 		
 	draw_calc_boundaries();

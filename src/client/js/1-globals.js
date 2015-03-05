@@ -5,6 +5,7 @@
 var global_enhanced_map;
 
 var global_max_labels = 20;
+var global_max_polys  = 300;
 
 
 // TODO: Calculate from the map?
