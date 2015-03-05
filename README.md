@@ -1,6 +1,9 @@
 # µcty.js
 openstreetmap in a box (proof of concept)
 
+## demo
+[Here.](http://ucty.oakey-dev.eu/) You can zoom in by scrolling with the mouse (or press `+` and `-`) and navigate with the arrow keys. Works in Firefox and Chromium. Zoom in closely, and you'll see address numbers and street names.
+
 ## features
 * convert [`OSM`](http://openstreetmap.org) files into minimal a minimal, `LZMA` compressed and lossy format
 * view the whole map in your browser with a tiny `HTML5` canvas based client
@@ -18,7 +21,7 @@ openstreetmap in a box (proof of concept)
 ## usage
 Make sure that you have installed the latest `nodejs`. Then issue the following commands:
 ```shell
-git clone https://github.com/robotanarchy/ucty.js.git
+git clone https://github.com/Bytewerk/ucty.js.git
 cd ucty.js
 npm install osmtogeojson uglify mathjs
 make
