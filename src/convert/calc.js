@@ -36,6 +36,11 @@ exports.round = function(obj, precision)
 	}
 	else
 	{
+		if(!obj)
+		{
+			console.log(new Error("calc.round: invalid object!").stack);
+			return obj;
+		}
 		for(var i=0;i<obj.length;i++)
 			obj[i] = exports.round(obj[i], precision);
 		return obj;
@@ -71,7 +76,7 @@ exports.bbox_size = function(bbox)
 
 exports.bbox_contains_point = function(bbox, x, y)
 {
-	return x > bbox[0] && x < bbox[2] && y > bbox[1] && y < bbox[3];
+	return x >= bbox[0] && x <= bbox[2] && y >= bbox[1] && y <= bbox[3];
 }
 
 

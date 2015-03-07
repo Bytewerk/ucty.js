@@ -27,7 +27,7 @@ exports.line = function(cutoff, feat)
 	var coords = feat.geometry.coordinates;
 	for(var i=0;i<coords.length;i++)
 	{
-		if(calc.bbox_contains_point(cutoff, coords[i][0], coords[i][0]))
+		if(calc.bbox_contains_point(cutoff, coords[i][0], coords[i][1]))
 			continue;
 		coords.splice(i,1);
 		i--;
@@ -35,12 +35,12 @@ exports.line = function(cutoff, feat)
 	if(!coords.length) return null;
 	
 	
-	// we won't draw the line anyway, so just
+	// we won't draw the whole line anyway, so just
 	// give back the coords of some point in the middle
 	// to display the label right
 	var center_coords = calc.round
 	(
-		coords[Math.round(coords.length / 2)],
+		coords[Math.floor(coords.length / 2)],
 		cfg_precision_line
 	);
 	var type = prop.natural
@@ -92,6 +92,30 @@ function fix_caption(feat, points)
 
 exports.polygon = function(cutoff, feat, points)
 {
+	// remove all points, that are out of bounds
+	var coords = feat.geometry.coordinates;
+	for(var i=0;i<coords.length;i++)
+	{
+		var group = coords[i];
+		for(var j=0;j<group.length;j++)
+		{
+			if(calc.bbox_contains_point(cutoff, group[j][0], group[j][1]))
+				continue;
+			
+			group.splice(j,1);
+			j--;
+		}
+		
+		if(group.length)
+			continue;
+		
+		coords.splice(i,1);
+		i--;
+	}
+	if(!coords.length) return null;
+	
+	coords = calc.round(coords, cfg_precision);
+	
 	var prop = feat.properties;
 	var type = prop.natural
 		|| (prop.building ? "building" : "")
@@ -100,13 +124,9 @@ exports.polygon = function(cutoff, feat, points)
 		|| (prop.highway ? "street" : "")
 		|| prop.type
 		|| "";
-	
 	var caption = prop.name
 		|| exports.addr(prop)
 		|| fix_caption(feat, points);
-	
-	var coords = calc.round(feat.geometry.coordinates,
-		cfg_precision);
 	
 	return [type, caption, coords];
 }

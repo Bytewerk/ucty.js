@@ -7,7 +7,7 @@ if(process.argv.length < 8)
 
 var fs         = require("fs");
 var file       = process.argv[2];
-var cutoff     = [process.argv[3], process.argv[4], process.argv[5], process.argv[6]];
+var cutoff     = [process.argv[4], process.argv[5], process.argv[6], process.argv[7]];
 var conv_entry = require("./convert_entry.js");
 
 console.log("loading "+file+"...");
