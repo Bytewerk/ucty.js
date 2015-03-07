@@ -23,6 +23,6 @@ Make sure that you have installed the latest `nodejs`. Then issue the following 
 ```shell
 git clone https://github.com/Bytewerk/ucty.js.git
 cd ucty.js
-npm install osmtogeojson uglify mathjs
+npm install osmtogeojson uglify-js mathjs
 make
 ```
