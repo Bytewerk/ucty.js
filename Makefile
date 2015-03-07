@@ -6,15 +6,15 @@ osm2gj = "./node_modules/osmtogeojson/osmtogeojson"
 uglify = "./node_modules/uglify-js/bin/uglifyjs"
 uflags = "--mangle --compress"
 
+# http://overpass-api.de/api/map?bbox=11.3638,48.7313,11.4617,48.7906
 
-src_x0 = 11.3988
-src_x1 = 11.4512
-src_y0 = 48.7531
-src_y1 = 48.7735
+src_x0 = 11.3638
+src_x1 = 11.4617
+src_y0 = 48.7313
+src_y1 = 48.7906
 
 
 # Coordinates of the area that will be cut out.
-# Not implemented yet.
 cut_x0 = $(src_x0)
 cut_x1 = $(src_x1)
 cut_y0 = $(src_y0)

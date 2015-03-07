@@ -106,8 +106,8 @@ exports.polygon = function(cutoff, feat, points)
 			j--;
 		}
 		
-		if(group.length)
-			continue;
+		// polygons with only two points are... just lines!
+		if(group.length>2) continue;
 		
 		coords.splice(i,1);
 		i--;
