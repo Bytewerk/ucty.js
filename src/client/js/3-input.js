@@ -5,8 +5,8 @@ window.onkeyup = function(e)
 	var move = 20 / global_zoom;
 	var k = e.keyCode;
 	
-	if(k == 171) return draw(global_zoom *= 1.1); // +
-	if(k == 173) return draw(global_zoom /= 1.1); // -
+	if(k == 171 || k == 107) return draw(global_zoom *= 1.1); // +
+	if(k == 173 || k == 109) return draw(global_zoom /= 1.1); // -
 	if(k == 38 || k == 75) return draw(global_center_y+= move); // up
 	if(k == 40 || k == 74) return draw(global_center_y-= move); // down
 	if(k == 37 || k == 72) return draw(global_center_x-= move); // left
@@ -115,7 +115,6 @@ addWheelListener(global_canvas,function(e)
 	
 	global_center_x += (geo[0] - global_center_x) * 0.05;
 	global_center_y += (geo[1] - global_center_y) * 0.05;
-	
 	
 	if(e.deltaY > 0)
 		global_zoom /= 1.05;
