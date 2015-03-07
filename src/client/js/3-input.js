@@ -47,9 +47,16 @@ function full_label(x, y)
 	// find the ones that are at the mouse position
 	// (or very near) and add all of them to the
 	// ret array
+	// FIXME: calculate, if the cursor is exactly
+	// inside the area!
 	for(var i=0;i<global_labels.length;i++)
 	{
 		var entry = global_labels[i];
+		
+		// as long as we only use the bounding box,
+		// water mostly shows up in the wrong places.
+		if(entry.type == "water")
+			continue;
 		
 		if(entry.line)
 		{
