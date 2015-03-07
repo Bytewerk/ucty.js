@@ -1,12 +1,24 @@
 #
 # CONFIGURATION
 #
-source = http://overpass-api.de/api/map?bbox=11.3988,48.7531,11.4512,48.7735
 node   = "/bin/node"
 osm2gj = "./node_modules/osmtogeojson/osmtogeojson"
 uglify = "./node_modules/uglify-js/bin/uglifyjs"
 uflags = "--mangle --compress"
 
+
+src_x0 = 11.3988
+src_x1 = 11.4512
+src_y0 = 48.7531
+src_y1 = 48.7735
+
+
+# Coordinates of the area that will be cut out.
+# Not implemented yet.
+cut_x0 = $(src_x0)
+cut_x1 = $(src_x1)
+cut_y0 = $(src_y0)
+cut_y1 = $(src_y1)
 
 
 #
@@ -60,7 +72,8 @@ temp/ucty_client_and_map.js: temp/ucty_map.js src/client/js/*
 
 temp/ucty_map.js: temp/map.geojson src/convert/*
 	$(node) src/convert/main.js \
-		temp/map.geojson temp/ucty_map.js
+		temp/map.geojson temp/ucty_map.js \
+		$(cut_x0) $(cut_y0) $(cut_x1) $(cut_y1)
 
 temp/map.geojson : input/map.osm
 	mkdir -p temp
@@ -73,4 +86,4 @@ temp/map.geojson : input/map.osm
 #
 
 input/map.osm:
-	curl -o input/map.osm $(source)
+	curl -o input/map.osm http://overpass-api.de/api/map?bbox=$(src_x0),$(src_y0),$(src_x1),$(src_y1)
