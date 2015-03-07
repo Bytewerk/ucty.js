@@ -9,7 +9,7 @@ var fs         = require("fs");
 var file       = process.argv[2];
 var conv_entry = require("./convert_entry.js");
 
-console.log("loading map "+file+"...");
+console.log("loading "+file+"...");
 var input	= JSON.parse(fs.readFileSync(file));
 
 // create a list of address-points here, so we can
@@ -35,16 +35,22 @@ for(var i=0;i<input.features.length;i++)
 }
 
 
-
-
-console.log("converting to µcty format...");
+function progress(i, total)
+{
+	var err = process.stderr;
+	err.cursorTo(28);
+	err.write(Math.round(i/total*100)+"%");
+}
 
 var output = [];
+process.stderr.write("converting to µcty format...");
 for(var i=0;i<input.features.length;i++)
 {
 	var feat = input.features[i];
 	var geo  = feat.geometry.type;
 	var is_line = (geo == "LineString");
+	
+	if(i%1000 == 0) progress(i, input.features.length);
 	
 	// skip these
 	if(geo == "Point"
@@ -56,8 +62,9 @@ for(var i=0;i<input.features.length;i++)
 	if(entry) output.push(entry);
 }
 
+progress(1, 1);
 
-console.log("Entries: "+output.length
+console.log("\nEntries: "+output.length
 	+" (of "+input.features.length+")");
 fs.writeFileSync(process.argv[3],
 	"var map="+JSON.stringify(output)+";");
