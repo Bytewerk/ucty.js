@@ -19,6 +19,16 @@ function mouse_to_geo(e)
 {
 	// we assume that the border size is the same on all sides
 	var border = (global_canvas.offsetWidth - global_canvas.clientWidth)/2;
+	
+	// Workaround: Qupzilla doesn't set e.pageX for scroll events
+	if(e.pageX && e.pageY)
+		global_last_page = [e.pageX, e.pageY];
+	else
+	{
+		e.pageX = global_last_page[0];
+		e.pageY = global_last_page[1];
+	}
+	
 	var x = e.pageX - global_canvas.offsetLeft - border;
 	var y = e.pageY - global_canvas.offsetTop - border;
 	
@@ -120,7 +130,6 @@ addWheelListener(global_canvas,function(e)
 		global_zoom /= 1.05;
 	else
 		global_zoom *= 1.05;
-	
 	
 	// When there are multiple scroll events,
 	// only redraw every 10 ms

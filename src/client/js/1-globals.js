@@ -16,6 +16,10 @@ var global_center_x;
 var global_center_y;
 var global_zoom;
 
+// workaround for Qupzilla:
+// the e.pageX and Y don't get set when scrolling
+var global_last_page;
+
 
 // set by draw_calc_boundaries()
 // [x0, y0, x1, y1]
