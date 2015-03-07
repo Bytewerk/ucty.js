@@ -1,12 +1,13 @@
-if(process.argv.length < 4)
+if(process.argv.length < 8)
 {
 	console.log("Syntax: "+process.argv[0]+" "
-		+process.argv[1]+" input.geojson output.ucty");
+		+process.argv[1]+" input.geojson output.ucty cutoff_x0 cutoff_y0 cutoff_x1 cutoff_y1");
 	process.exit(1);
 }
 
 var fs         = require("fs");
 var file       = process.argv[2];
+var cutoff     = [process.argv[3], process.argv[4], process.argv[5], process.argv[6]];
 var conv_entry = require("./convert_entry.js");
 
 console.log("loading "+file+"...");
@@ -57,8 +58,8 @@ for(var i=0;i<input.features.length;i++)
 		|| feat.properties.boundary)
 		continue;
 	
-	var entry = is_line ? conv_entry.line(feat)
-		: conv_entry.polygon(feat, points);
+	var entry = is_line ? conv_entry.line(cutoff, feat)
+		: conv_entry.polygon(cutoff, feat, points);
 	if(entry) output.push(entry);
 }
 

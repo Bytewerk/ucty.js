@@ -14,7 +14,8 @@ exports.addr = function(prop)
 	return "";
 }
 
-exports.line = function(feat)
+
+exports.line = function(cutoff, feat)
 {
 	// it's all about the captions!
 	var prop = feat.properties;
@@ -22,23 +23,33 @@ exports.line = function(feat)
 	if(!caption) return null;
 	
 	
-	var type = prop.natural
-		|| (prop.waterway ? "water" : "")
-		|| (prop.highway ? "street" : "")
-		|| prop.type
-		|| "";
+	// remove all points, that are out of bounds
 	var coords = feat.geometry.coordinates;
-	var width = prop.width;
+	for(var i=0;i<coords.length;i++)
+	{
+		if(calc.bbox_contains_point(cutoff, coords[i][0], coords[i][0]))
+			continue;
+		coords.splice(i,1);
+		i--;
+	}
+	if(!coords.length) return null;
 	
 	
 	// we won't draw the line anyway, so just
 	// give back the coords of some point in the middle
 	// to display the label right
-	center_coords = calc.round
+	var center_coords = calc.round
 	(
 		coords[Math.round(coords.length / 2)],
 		cfg_precision_line
 	);
+	var type = prop.natural
+		|| (prop.waterway ? "water" : "")
+		|| (prop.highway ? "street" : "")
+		|| prop.type
+		|| "";
+	var width = prop.width;
+	
 	
 	return [
 		type,
@@ -79,7 +90,7 @@ function fix_caption(feat, points)
 	return "";
 }
 
-exports.polygon = function(feat, points)
+exports.polygon = function(cutoff, feat, points)
 {
 	var prop = feat.properties;
 	var type = prop.natural

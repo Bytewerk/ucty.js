@@ -69,6 +69,10 @@ exports.bbox_size = function(bbox)
 		+ Math.pow(bbox[3] - bbox[1],2),0.5);
 }
 
+exports.bbox_contains_point = function(bbox, x, y)
+{
+	return x > bbox[0] && x < bbox[2] && y > bbox[1] && y < bbox[3];
+}
 
 
 
