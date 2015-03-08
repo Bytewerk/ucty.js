@@ -1,12 +1,11 @@
 #
 # CONFIGURATION
 #
-node   = "/bin/node"
-osm2gj = "./node_modules/osmtogeojson/osmtogeojson"
-uglify = "./node_modules/uglify-js/bin/uglifyjs"
-uflags = "--mangle --compress"
+node   = /bin/node
+osm2gj = ./node_modules/osmtogeojson/osmtogeojson
+uglify = ./node_modules/uglify-js/bin/uglifyjs
+uflags = --compress unsafe --screw-ie8
 
-# http://overpass-api.de/api/map?bbox=11.3638,48.7313,11.4617,48.7906
 
 src_x0 = 11.3638
 src_x1 = 11.4617
@@ -24,7 +23,7 @@ cut_y1 = $(src_y1)
 #
 # PHONY TARGETS
 #
-.PHONY: all clean
+.PHONY: all clean ugly
 
 all: out/ucty.bin out/ucty.js out/index_example.html
 	src/stats.sh
@@ -32,6 +31,9 @@ all: out/ucty.bin out/ucty.js out/index_example.html
 clean:
 	rm -r temp out || true
 
+ugly:
+	rm out/ucty.js temp/*.ugly || true
+	make
 
 
 #
@@ -48,7 +50,8 @@ out/ucty.bin: temp/ucty_client_and_map.ugly
 
 out/ucty.js: temp/unlzma.js
 	mkdir -p out
-	$(uglify) $(uflags) --output out/ucty.js temp/unlzma.js
+	$(uglify) $(uflags) --output out/ucty.js \
+	--mangle sort,eval temp/unlzma.js
 
 
 #
@@ -60,10 +63,10 @@ temp/unlzma.js: src/client/decompress.js src/lzma-js/lzma-d-min.js
 	cat src/lzma-js/lzma-d-min.js src/client/decompress.js > temp/unlzma.js
 	sed -i 's/"use strict";//g' temp/unlzma.js
 
-# TODO: add enclose option
 temp/ucty_client_and_map.ugly: temp/ucty_client_and_map.js
-	$(uglify) $(uflags) \
+	$(uglify) $(uflags) --enclose \
 		--output temp/ucty_client_and_map.ugly \
+		--mangle sort,toplevel,eval \
 		temp/ucty_client_and_map.js
 
 temp/ucty_client_and_map.js: temp/ucty_map.js src/client/js/*
