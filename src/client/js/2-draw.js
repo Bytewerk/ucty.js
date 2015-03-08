@@ -21,15 +21,7 @@ function draw_line_reset()
 	global_c2.lineWidth = 1.0;
 }
 
-function draw_line_street(w)
-{
-	var width = global_zoom / 40000 + 1;
-	if(w) width *= 1 + w*0.2;
-	
-	global_c2.lineWidth = width;
-}
-
-function draw_group(group, name)
+function draw_group(group)
 {
 	global_c2.beginPath();
 	
@@ -41,8 +33,6 @@ function draw_group(group, name)
 		if(!k)	global_c2.moveTo(x,y);
 		else	global_c2.lineTo(x,y);
 	}
-	
-	// if(!x) console.log("error while drawing: "+name);
 	
 	global_c2.closePath();
 	global_c2.fill();
