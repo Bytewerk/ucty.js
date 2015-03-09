@@ -63,3 +63,8 @@ var global_colors =
 
 
 var global_zoom_timeout = null;
+var global_redraw = false;
+var global_is_drawing = false;
+
+
+

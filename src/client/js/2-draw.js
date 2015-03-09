@@ -48,7 +48,9 @@ function draw_polygons()
 {
 	var drawn = 0;
 	for(var i=0;i<global_polys.length;i++)
-	{	
+	{
+		if(global_redraw) return;
+		
 		var entry = global_polys[i];
 		if(entry.line || entry.type == "area") continue;
 		if(drawn >= global_max_polys && entry.type != "water") continue;
@@ -136,6 +138,8 @@ function draw_labels()
 	
 	for(var i=0;i<global_labels.length;i++)
 	{
+		if(global_redraw) return;
+		
 		var entry = global_labels[i];
 		
 		if(!entry.short
@@ -160,13 +164,21 @@ function draw_labels()
 	return drawn;
 }
 
-function draw()
+function draw(no_is_drawing_check)
 {
+	if(!no_is_drawing_check && global_is_drawing)
+		return global_redraw = true;
+	
+	global_redraw = false;
+	global_is_drawing = true;
+	
 	global_c2.clearRect(0,0,global_canvas.width,global_canvas.height);
 	draw_calc_boundaries();
 	
 	var obj_drawn = draw_polygons();
+	if(global_redraw) return draw(true);
 	var label_drawn = draw_labels();
+	if(global_redraw) return draw(true);
 	
 	
 	// be nice and draw copyright info for OSM:
@@ -184,4 +196,5 @@ function draw()
 		+ "Labels:   "+label_drawn+"/"+global_labels.length;
 */		
 	draw_calc_boundaries();
+	global_is_drawing = false;
 }
