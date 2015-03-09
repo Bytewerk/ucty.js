@@ -17,8 +17,6 @@ window.onkeyup = function(e)
 // returns an [x,y] array
 function mouse_to_geo(e)
 {
-	// we assume that the border size is the same on all sides
-	var border = (global_canvas.offsetWidth - global_canvas.clientWidth)/2;
 	
 	// Workaround: Qupzilla doesn't set e.pageX for scroll events
 	if(e.pageX && e.pageY)
@@ -29,8 +27,8 @@ function mouse_to_geo(e)
 		e.pageY = global_last_page[1];
 	}
 	
-	var x = e.pageX - global_canvas.offsetLeft - border;
-	var y = e.pageY - global_canvas.offsetTop - border;
+	var x = e.pageX - global_ui_content_bbox[0];
+	var y = e.pageY - global_ui_content_bbox[1];
 	
 	var map_width  = global_canvas.width  / global_zoom;
 	var map_height = global_canvas.height / global_zoom;
@@ -88,18 +86,7 @@ function full_label(x, y)
 				add(entry);
 		}
 	}
-	return ret;
-}
-
-global_canvas.onmousemove = function(e)
-{	
-	var geo = mouse_to_geo(e);
-	
-	global_info.innerHTML=
-		"Mouse X:  " + geo[0] + "\n" +
-		"Mouse Y:  " + geo[1] + "\n" +
-		full_label(geo[0], geo[1]);
-	;
+	return ret.reverse();
 }
 
 /*
@@ -119,10 +106,19 @@ global_canvas.onclick = function(e)
 }
 */
 
-addWheelListener(global_canvas,function(e)
-{
+
+function input_canvas_mousemove(e)
+{	
 	var geo = mouse_to_geo(e);
 	
+	global_ui_message.innerHTML =
+		full_label(geo[0],geo[1]).join("\n");
+}
+
+function input_canvas_mouseweel(e)
+{
+	var geo = mouse_to_geo(e);
+				
 	global_center_x += (geo[0] - global_center_x) * 0.05;
 	global_center_y += (geo[1] - global_center_y) * 0.05;
 	
@@ -138,4 +134,16 @@ addWheelListener(global_canvas,function(e)
 	global_zoom_timeout = setTimeout(draw,10);
 	
 	e.preventDefault();
-});
+}
+
+function input_resize()
+{
+	if(!global_canvas) return;
+	global_canvas.width  = global_tab_content[0].clientWidth;
+	global_canvas.height = global_tab_content[0].clientHeight;
+	draw();
+}
+window.onresize = input_resize;
+
+
+

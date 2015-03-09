@@ -175,13 +175,13 @@ function draw()
 	global_c2.globalAlpha = 1.0;
 	global_c2.strokeText("Map Data © OpenStreetMap Contributors",
 		20.5,global_canvas.height - 20.5);
-
+/*
 	debug.innerHTML
 		= "Center X: "+global_center_x+"\n"
 		+ "Center Y: "+global_center_y+"\n"
 		+ "Zoom:     "+global_zoom+"\n\n"
 		+ "Objects:  "+obj_drawn+"/"+global_polys.length+"\n"
 		+ "Labels:   "+label_drawn+"/"+global_labels.length;
-		
+*/		
 	draw_calc_boundaries();
 }

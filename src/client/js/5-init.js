@@ -160,8 +160,16 @@ var init_find_edges = function(x, y)
 	global_map_edges = e;
 };
 
+// TODO: add parameter for element IDs
+// that should be set when coordinates
+// have been chosen
 function init()
 {	
+	init_ui();
+	
+	global_c2 = global_canvas.getContext("2d");
+	global_c2.lineCap = "round";
+	
 	var map2 = init_enhance_map();
 	
 	// sort all objects by size, biggest first
@@ -185,7 +193,7 @@ function init()
 	
 	init_split_enhanced_map();
 	
-	draw();
+	input_resize();
 }
 
 

@@ -26,13 +26,24 @@ var global_last_page;
 var global_screen_edges = [null, null, null, null];
 
 
-// TODO: do this in an init function
-var global_info   = document.getElementById("info");
-var global_debug  = document.getElementById("debug");
-var global_canvas = document.getElementById("mapc");
-var global_c2     = global_canvas.getContext("2d");
+// UI related
+var global_overlay;
+var global_tabs = [];
+var global_tab_active_element;
+var global_tab_content = [];
+var global_ui_main;
+var global_ui_x;
+var global_ui_message;
+var global_ui_button;
+var global_ui_content_bbox = [20, 54, 20, 20];
 
-global_c2.lineCap = "round";
+
+var global_info   = document.getElementById("info");
+// var global_debug  = document.getElementById("debug");
+var global_canvas;
+var global_c2;
+// var global_canvas = document.getElementById("mapc");
+//var global_c2     = global_canvas.getContext("2d");
 
 
 // type:
