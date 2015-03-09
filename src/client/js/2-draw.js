@@ -164,6 +164,36 @@ function draw_labels()
 	return drawn;
 }
 
+function draw_marker()
+{
+	if(!global_selection)
+	{
+		global_ui_question.style.display = "none";
+		return;
+	}
+	
+	var x = draw_x(global_selection[0]);
+	var y = draw_y(global_selection[1]);
+	var c2 = global_c2;
+	c2.strokeStyle = ui_color_main; 
+	
+	// outer circle
+	c2.lineWidth = 4.0;
+    c2.beginPath();
+    c2.arc(x,y,15, 0, 2* Math.PI, false);
+    c2.closePath();
+    c2.stroke();
+    
+    // inner circle
+	c2.lineWidth = 1.0;
+    c2.beginPath();
+    c2.arc(x,y,10, 0, 2* Math.PI, false);
+    c2.closePath();
+    c2.stroke();
+    
+    ui_draw_question(x, y);
+}
+
 function draw(no_is_drawing_check)
 {
 	if(!no_is_drawing_check && global_is_drawing)
@@ -196,5 +226,6 @@ function draw(no_is_drawing_check)
 		+ "Labels:   "+label_drawn+"/"+global_labels.length;
 */		
 	draw_calc_boundaries();
+	draw_marker();
 	global_is_drawing = false;
 }

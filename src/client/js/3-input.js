@@ -40,6 +40,8 @@ function mouse_to_geo(e)
 }
 
 // arguments must be geo coords
+// TODO: abort this function, when the mouse has moved
+// to speed it up in firefox
 function full_label(x, y)
 {
 	var ret = [];
@@ -89,28 +91,12 @@ function full_label(x, y)
 	return ret.reverse();
 }
 
-/*
-global_canvas.onclick = function(e)
-{
-	var geo = mouse_to_geo(e);
-	
-	var x = draw_x(geo[0]);
-	var y = draw_y(geo[1]);
-	
-	global_c2.strokeStyle = '#000'; 
-    global_c2.beginPath();
-    global_c2.arc(x,y,10, 0, 2* Math.PI, false);
-    global_c2.fillStyle = "green";
-    global_c2.fill();
-    global_c2.closePath();  
-}
-*/
 
 
 function input_canvas_mousemove(e)
-{	
+{
 	var geo = mouse_to_geo(e);
-	
+
 	global_ui_message.innerHTML =
 		full_label(geo[0],geo[1]).join("\n");
 }
@@ -134,6 +120,13 @@ function input_canvas_mouseweel(e)
 	global_zoom_timeout = setTimeout(draw,10);
 	
 	e.preventDefault();
+}
+
+function input_canvas_mouseclick(e)
+{
+	var geo = mouse_to_geo(e);
+	global_selection = geo;
+	draw();
 }
 
 function input_resize()

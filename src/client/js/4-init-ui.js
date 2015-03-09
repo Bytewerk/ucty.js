@@ -1,10 +1,5 @@
 "use strict";
 
-var ui_color_main = "#dc0067";
-var ui_color_alt  = "#ffb400";
-var ui_font_big   = "15pt";
-var z_base = 1e5;
-
 
 function ui_setpos(element, left, top, right, bottom, z)
 {
@@ -86,31 +81,83 @@ function ui_draw_main()
 	}
 }
 
-function ui_draw_button()
+function ui_draw_question(marker_x, marker_y)
 {
-	if(!global_ui_button)
+	if(!global_ui_question)
 	{
-		var btn = document.createElement("div");
-		btn.style.padding = "10px 20px";
-		btn.style.cursor = "pointer";
-		btn.style.fontSize = ui_font_big;
-		// btn.style.backgroundColor = "white";
-		btn.style.margin = "10px";
-		btn.onmouseover = function()
+		var q = document.createElement("div");
+		q.style.padding = "10px 20px";
+		q.style.cursor = "default";
+		q.style.fontSize = ui_font_big;
+		q.style.backgroundColor = "white";
+		q.style.textAlign = "center";
+		q.innerHTML="Koordinaten übernehmen?";
+		q.style.display = "none";
+		q.style.height = "100px";
+		q.style.width  = "300px";
+		q.style.paddingTop = "20px";
+		
+		q.style.borderBottom
+		= q.style.borderTop
+		= "5px solid" +ui_color_main;
+		
+		// yes, no
+		for(var is_yes=0;is_yes<2;is_yes++)
 		{
-			this.style.borderBottom = "5px solid "+ui_color_main;
-		};
-		btn.onmouseout = function()
-		{
-			this.style.borderBottom = "5px solid "+ui_color_alt;
-		};
-		btn.onmouseout();
-		ui_setpos(btn, undefined, 30, 30);
-		global_ui_main.appendChild(btn);
-		global_ui_button = btn;
+			var answer = document.createElement("div");
+			answer.style.width = "100px";
+			answer.style.height = "30px";
+			answer.style.textAlign = "center";
+			answer.style.cursor = "pointer";
+			answer.onmouseover=function()
+			{
+				this.style.borderBottom = "5px solid"+ui_color_main;
+			};
+			answer.onmouseout=function()
+			{
+				this.style.borderBottom = "5px solid"+ui_color_alt;
+			};
+			answer.onmouseout();
+			
+			answer.onclick = is_yes
+				? function()
+				{
+					// TODO: fill coordinates in some form!
+					global_overlay.style.display = "none";
+				}
+				: function()
+				{
+					global_selection = false;
+					draw();
+				}
+			;
+			answer.innerHTML = is_yes ? "Ja" : "Nein";
+			ui_setpos(answer, (is_yes?50:180), 70);
+			q.appendChild(answer);
+		}
+		
+		
+		
+		
+		global_ui_main.appendChild(q);
+		global_ui_question = q;
 	}
 	
-	global_ui_button.innerHTML= "OK";
+	var q = global_ui_question;
+	
+	if(marker_x)
+	{
+		q.style.display = "block";
+		ui_setpos
+		(
+			q,
+			marker_x - q.clientWidth/2,
+			marker_y - q.clientHeight - 50,
+			undefined,
+			undefined,
+			1000
+		);
+	}
 }
 
 function ui_draw_x()
@@ -153,6 +200,7 @@ function ui_draw_content()
 			content.appendChild(canvas);
 			global_canvas = canvas;
 			
+			canvas.onclick = input_canvas_mouseclick;
 			canvas.onmousemove = input_canvas_mousemove;
 			addWheelListener(global_canvas,input_canvas_mouseweel);
 			
@@ -184,7 +232,7 @@ function init_ui(target_el_lat, target_el_long)
 		ui_draw_x();
 		ui_draw_main();
 		ui_draw_content();
-		// ui_draw_button();
+		ui_draw_question();
 		ui_draw_tabs();
 	}
 	

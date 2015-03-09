@@ -34,8 +34,13 @@ var global_tab_content = [];
 var global_ui_main;
 var global_ui_x;
 var global_ui_message;
-var global_ui_button;
+var global_ui_question;
 var global_ui_content_bbox = [20, 54, 20, 20];
+var ui_color_main = "#dc0067";
+var ui_color_alt  = "#ffb400";
+var ui_font_big   = "15pt";
+var z_base = 1e5;
+
 
 
 var global_info   = document.getElementById("info");
@@ -66,5 +71,5 @@ var global_zoom_timeout = null;
 var global_redraw = false;
 var global_is_drawing = false;
 
-
+var global_selection = false; // [x,y]
 
