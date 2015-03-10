@@ -7,10 +7,18 @@ window.onkeyup = function(e)
 	
 	if(k == 171 || k == 107) return draw(global_zoom *= 1.1); // +
 	if(k == 173 || k == 109) return draw(global_zoom /= 1.1); // -
-	if(k == 38 || k == 75) return draw(global_center_y+= move); // up
-	if(k == 40 || k == 74) return draw(global_center_y-= move); // down
-	if(k == 37 || k == 72) return draw(global_center_x-= move); // left
-	if(k == 39 || k == 76) return draw(global_center_x+= move); // right
+	
+	// up
+	if([38,75,87].indexOf(k)>-1) return draw(global_center_y+= move);
+	
+	// down
+	if([40,74,83].indexOf(k)>-1) return draw(global_center_y-= move);
+	
+	// left
+	if([37,72,65].indexOf(k)>-1) return draw(global_center_x-= move);
+	
+	// right
+	if([39,76,68].indexOf(k)>-1) return draw(global_center_x+= move);
 };
 
 
