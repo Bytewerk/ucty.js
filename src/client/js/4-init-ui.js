@@ -23,7 +23,7 @@ function ui_draw_tabs()
 		for(var i=0;i<2;i++)
 		{
 			var tab = document.createElement("div");
-			ui_setpos(tab, i?190:40, 10, undefined, undefined, 1);
+			ui_setpos(tab, i?190:40, 10, undefined, undefined, 2);
 			tab.style.height = "20px";
 			tab.style.width  = "50px";
 			tab.style.padding = "10px 50px";
@@ -70,7 +70,7 @@ function ui_draw_main()
 	{
 		var main = document.createElement("div");
 		var bbox  = global_ui_content_bbox;
-		ui_setpos(main, bbox[0], bbox[1], bbox[2], bbox[3], 2);
+		ui_setpos(main, bbox[0], bbox[1], bbox[2], bbox[3], 1);
 		main.style.backgroundColor = "white";
 		main.style.borderTop
 			= main.style.borderBottom
@@ -138,7 +138,7 @@ function ui_draw_question(marker_x, marker_y)
 		
 		
 		
-		global_ui_main.appendChild(q);
+		global_overlay.appendChild(q);
 		global_ui_question = q;
 	}
 	
@@ -146,12 +146,12 @@ function ui_draw_question(marker_x, marker_y)
 	
 	if(marker_x)
 	{
-		var x = marker_x - 170;
-		var y = marker_y - 180;
-		if(y < -55) y = marker_y + 50;
+		var x = marker_x - 150;
+		var y = marker_y - 120;
+		if(y<5) y = marker_y + 100;
 		
-		if(x < -10) x = -10;
-		var x_max = global_canvas.clientWidth - 330;
+		if(x<5) x = 5;
+		var x_max = global_canvas.clientWidth - 305;
 		if(x > x_max) x = x_max;
 		
 		q.style.display = "block";
@@ -162,7 +162,7 @@ function ui_draw_question(marker_x, marker_y)
 			y,
 			undefined,
 			undefined,
-			1000
+			3
 		);
 	}
 }
