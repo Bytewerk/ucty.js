@@ -9,12 +9,18 @@ var global_labels = [];
 var global_max_labels = 20;
 var global_max_polys  = 300;
 
+
+
 // set by init();
 // [x0, y0, x1, y1]
 var global_map_edges = [null, null, null, null];
 var global_center_x;
 var global_center_y;
 var global_zoom;
+var global_init_complete = false;
+var global_long_elem;
+var global_lat_elem;
+
 
 // workaround for Qupzilla:
 // the e.pageX and Y don't get set when scrolling

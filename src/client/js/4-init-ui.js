@@ -121,7 +121,9 @@ function ui_draw_question(marker_x, marker_y)
 			answer.onclick = is_yes
 				? function()
 				{
-					// TODO: fill coordinates in some form!
+					global_long_elem.value = global_selection[0];
+					global_lat_elem.value  = global_selection[1];
+					global_selection = false;
 					global_overlay.style.display = "none";
 				}
 				: function()

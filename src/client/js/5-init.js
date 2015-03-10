@@ -160,41 +160,48 @@ var init_find_edges = function(x, y)
 	global_map_edges = e;
 };
 
-// TODO: add parameter for element IDs
-// that should be set when coordinates
-// have been chosen
-function init()
+/*
+	When loaded with "decompress.js" (ucty.js in the compiled version),
+	this function overrides the other ucty() function, so the code doesn't
+	get decompressed again when it is already loaded.
+*/
+function ucty(long_elem, lat_elem)
 {	
-	init_ui();
-	
-	global_c2 = global_canvas.getContext("2d");
-	global_c2.lineCap = "round";
-	
-	var map2 = init_enhance_map();
-	
-	// sort all objects by size, biggest first
-	map2.sort(function(a,b)
+	if(!global_init_complete)
 	{
-		if(a.size > b.size) return -1
-		if(a.size < b.size) return +1;
-		return 0;
-	});
+		init_ui();
+		
+		global_c2 = global_canvas.getContext("2d");
+		global_c2.lineCap = "round";
+		
+		var map2 = init_enhance_map();
+		
+		// sort all objects by size, biggest first
+		map2.sort(function(a,b)
+		{
+			if(a.size > b.size) return -1
+			if(a.size < b.size) return +1;
+			return 0;
+		});
+		
+		global_enhanced_map = map2;
+		
+		// [x0, y0, x1, y1]
+		var e = global_map_edges;
+		global_center_x = e[0] + (e[2] - e[0])/2;
+		global_center_y = e[1] + (e[3] - e[1])/2;
+		
+		// make default zoom depend on the diagonal length
+		global_zoom = Math.pow(Math.pow(e[2]-e[0],2)
+			+ Math.pow(e[3]-e[1],2),0.5) * 150000;
+		
+		init_split_enhanced_map();	
+		
+		global_init_complete = true;
+	}
 	
-	global_enhanced_map = map2;
-	
-	// [x0, y0, x1, y1]
-	var e = global_map_edges;
-	global_center_x = e[0] + (e[2] - e[0])/2;
-	global_center_y = e[1] + (e[3] - e[1])/2;
-	
-	// make default zoom depend on the diagonal length
-	global_zoom = Math.pow(Math.pow(e[2]-e[0],2)
-		+ Math.pow(e[3]-e[1],2),0.5) * 150000;
-	
-	init_split_enhanced_map();
-	
+	global_long_elem = document.getElementById(long_elem);
+	global_lat_elem  = document.getElementById(lat_elem);
+	global_overlay.style.display="block";
 	input_resize();
 }
-
-
-init();
