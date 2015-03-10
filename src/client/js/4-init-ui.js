@@ -23,7 +23,7 @@ function ui_draw_tabs()
 		for(var i=0;i<2;i++)
 		{
 			var tab = document.createElement("div");
-			ui_setpos(tab, i?190:40, 10, undefined, undefined, 10);
+			ui_setpos(tab, i?190:40, 10, undefined, undefined, 1);
 			tab.style.height = "20px";
 			tab.style.width  = "50px";
 			tab.style.padding = "10px 50px";
@@ -58,7 +58,6 @@ function ui_draw_tabs()
 		{
 			global_tab_active_element = this;
 			ui_draw_tabs();
-			// TODO: also show/hide corresponding div
 		}
 		
 		global_tab_content[i].style.display = a ? "block" : "none";
@@ -147,12 +146,20 @@ function ui_draw_question(marker_x, marker_y)
 	
 	if(marker_x)
 	{
+		var x = marker_x - 170;
+		var y = marker_y - 180;
+		if(y < -55) y = marker_y + 50;
+		
+		if(x < -10) x = -10;
+		var x_max = global_canvas.clientWidth - 330;
+		if(x > x_max) x = x_max;
+		
 		q.style.display = "block";
 		ui_setpos
 		(
 			q,
-			marker_x - q.clientWidth/2,
-			marker_y - q.clientHeight - 50,
+			x,
+			y,
 			undefined,
 			undefined,
 			1000
