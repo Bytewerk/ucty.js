@@ -64,7 +64,7 @@ temp/unlzma.js: src/client/decompress.js src/lzma-js/lzma-d-min.js
 	sed -i 's/"use strict";//g' temp/unlzma.js
 
 temp/ucty_client_and_map.ugly: temp/ucty_client_and_map.js
-	$(uglify) $(uflags) --wrap ucty \
+	$(uglify) $(uflags) --enclose ucty \
 		--output temp/ucty_client_and_map.ugly \
 		--mangle sort,toplevel,eval \
 		temp/ucty_client_and_map.js

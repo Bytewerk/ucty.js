@@ -4,7 +4,7 @@
 // https://github.com/nmrugg/LZMA-JS/tree/master/src
 
 
-function ucty(long_elem, lat_elem)
+function ucty()
 {
 	var xhr = new XMLHttpRequest();
 	xhr.open("GET", "ucty.bin", true);
@@ -14,11 +14,7 @@ function ucty(long_elem, lat_elem)
 		if(xhr.status == 200) LZMA.decompress
 		(
 			new Uint8Array(xhr.response),
-			function(code)
-			{
-				eval(code);
-				ucty(long_elem, lat_elem);
-			}
+			eval
 		)
 	}
 	xhr.send();

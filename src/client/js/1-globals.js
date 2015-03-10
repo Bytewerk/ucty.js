@@ -1,6 +1,6 @@
 "use strict";
 
-// the variable 'map' is currently also global. It does not have a prefix.
+// the variable 'map' is currently also global. It does not have a prefix yet.
 
 var global_enhanced_map;
 var global_polys = [];

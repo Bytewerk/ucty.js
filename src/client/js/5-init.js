@@ -161,11 +161,13 @@ var init_find_edges = function(x, y)
 };
 
 /*
-	When loaded with "decompress.js" (ucty.js in the compiled version),
-	this function overrides the other ucty() function, so the code doesn't
-	get decompressed again when it is already loaded.
+	Parameters supplied:
+	
+	µ[0]: id of 'show map' button
+	µ[1]: id of longitude input
+	µ[2]: id of latitude input
 */
-function ucty(long_elem, lat_elem)
+function init()
 {	
 	if(!global_init_complete)
 	{
@@ -200,8 +202,17 @@ function ucty(long_elem, lat_elem)
 		global_init_complete = true;
 	}
 	
-	global_long_elem = document.getElementById(long_elem);
-	global_lat_elem  = document.getElementById(lat_elem);
+	global_long_elem = document.getElementById(µ[1]);
+	global_lat_elem  = document.getElementById(µ[2]);
 	global_overlay.style.display="block";
 	input_resize();
+	
+	/*
+		None of the client code is in global scope.
+		Throw an anchor at the button, so it will not
+		disappear in the void :>
+	*/
+	document.getElementById(µ[0]).onclick = init;
 }
+
+init();

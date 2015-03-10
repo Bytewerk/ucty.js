@@ -2,13 +2,21 @@
 <meta charset="utf-8"> 
 <html>
 	<body>
-		<!-- TODO: integrate this in the map? -->
+		
+		<input id="long" placeholder="long">
+		<input id="lat"  placeholder="lat">
+		<input id="btn" type="button" value="Gimme a map already!"
+			onclick="ucty()" >
+		
+		<br><br>
+		
 		<br><a href="http://openstreetmap.org/copyright"
 			style="font-size: 9pt;color: black" >OSM Terms</a>
 		<br><a href="https://github.com/Bytewerk/ucty.js"
 			style="font-size: 9pt;color: black" >Source Code</a>
 		<br>Decompression takes some time, be patient.
 	</body>
+	
+	<script>var µ = ["btn","long","lat"];</script>
 	<script src="ucty.js"></script>
-	<script>ucty();</script>
 </html>
