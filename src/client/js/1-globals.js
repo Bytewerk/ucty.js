@@ -6,7 +6,8 @@
 	(that executes init() immediatelly).
 */
 
-// the variable 'map' is currently also global. It does not have a prefix yet.
+// The variable 'map' is currently also global.
+// It does not have a prefix yet.
 
 var global_enhanced_map;
 var global_polys = [];
@@ -14,8 +15,6 @@ var global_labels = [];
 
 var global_max_labels = 20;
 var global_max_polys  = 300;
-
-
 
 // set by init();
 // [x0, y0, x1, y1]
@@ -53,6 +52,9 @@ var ui_color_alt  = "#ffb400";
 var ui_font_big   = "15pt";
 var z_base = 1e5;
 
+
+// drag
+var global_mousedown_coords = null;
 
 
 var global_info   = document.getElementById("info");

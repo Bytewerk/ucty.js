@@ -209,9 +209,29 @@ function ui_draw_content()
 			content.appendChild(canvas);
 			global_canvas = canvas;
 			
-			canvas.onclick = input_canvas_mouseclick;
+			// canvas.onclick = input_canvas_mouseclick;
 			canvas.onmousemove = input_canvas_mousemove;
 			addWheelListener(global_canvas,input_canvas_mouseweel);
+			
+			
+			// Tried to use the HTML5 drag 'n' drop API first,
+			// but it only makes everything more complicated.
+			// (after all, this isn't drag 'n' drop, just drag ;))
+			
+			canvas.onmousedown = function(e)
+			{
+				global_mousedown_coords = [e.clientX, e.clientY];
+			}
+			canvas.onmouseup = function(e)
+			{
+				var old = global_mousedown_coords;
+				if(old[0] == e.clientX && old[1] == e.clientY)
+					input_canvas_mouseclick(e);
+				
+				this.style.cursor = "default";
+				global_mousedown_coords = false;
+			}
+			
 			
 			var msg = document.createElement("pre");
 			ui_setpos(msg, undefined, undefined, 0, 0);

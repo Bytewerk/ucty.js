@@ -103,10 +103,49 @@ function full_label(x, y)
 
 function input_canvas_mousemove(e)
 {
-	var geo = mouse_to_geo(e);
-
-	global_ui_message.innerHTML =
-		full_label(geo[0],geo[1]).join("\n");
+	var old = global_mousedown_coords;
+	if(old && (old[0] != e.clientX || old[1] != e.clientY))
+	{
+		global_canvas.style.cursor = "all-scroll";
+		
+		// TODO: drag!
+		// TODO: remove question box!
+		var diff_x = e.clientX - old[0];
+		var diff_y = e.clientY - old[1];
+		
+		/*
+			IN PROGRESS:
+			the drag code below is crap and doesn't
+			use diff_x and diff_y at all.
+			TODO:
+			  *  rewrite mouse_to_geo() to more
+					general function counterparts to
+					draw_x() and draw_y() (*draw.js)
+			  *  use these functions to add the
+					distance that the user has made
+					to global center and redraw
+			  *  set the mousedown coords to the current
+					position
+			  *  add an additional boolean that controls
+					whether the question thing shows up
+		*/
+		// Debug: not using diff_x,y at all here.
+		var geo = mouse_to_geo(e);
+		global_center_x += (geo[0] - global_center_x) * 0.05;
+		global_center_y += (geo[1] - global_center_y) * 0.05;
+		
+		// When there are multiple scroll events,
+		// only redraw every 10 ms
+		if(global_zoom_timeout) clearTimeout(global_zoom_timeout);
+		else draw();
+		global_zoom_timeout = setTimeout(draw,10);
+	}
+	else
+	{
+		var geo = mouse_to_geo(e);
+		global_ui_message.innerHTML =
+			full_label(geo[0],geo[1]).join("\n");
+	}
 }
 
 function input_canvas_mouseweel(e)
