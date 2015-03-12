@@ -100,45 +100,35 @@ function full_label(x, y)
 }
 
 
+function input_timeout_draw()
+{
+	// When there are multiple scroll events,
+	// only redraw every 10 ms
+	if(global_timeout_draw) clearTimeout(global_timeout_draw);
+	else draw();
+	global_timeout_draw = setTimeout(draw,10);
+}
 
 function input_canvas_mousemove(e)
 {
 	var old = global_mousedown_coords;
 	if(old && (old[0] != e.clientX || old[1] != e.clientY))
 	{
+		global_dragged = true;
 		global_canvas.style.cursor = "all-scroll";
 		
-		// TODO: drag!
-		// TODO: remove question box!
+		// TODO: remove question box, if already open!
+		
 		var diff_x = e.clientX - old[0];
 		var diff_y = e.clientY - old[1];
 		
-		/*
-			IN PROGRESS:
-			the drag code below is crap and doesn't
-			use diff_x and diff_y at all.
-			TODO:
-			  *  rewrite mouse_to_geo() to more
-					general function counterparts to
-					draw_x() and draw_y() (*draw.js)
-			  *  use these functions to add the
-					distance that the user has made
-					to global center and redraw
-			  *  set the mousedown coords to the current
-					position
-			  *  add an additional boolean that controls
-					whether the question thing shows up
-		*/
-		// Debug: not using diff_x,y at all here.
-		var geo = mouse_to_geo(e);
-		global_center_x += (geo[0] - global_center_x) * 0.05;
-		global_center_y += (geo[1] - global_center_y) * 0.05;
+		// var map_width = global_canvas.width / global_zoom
+		global_center_x += diff_x / global_zoom;
+		global_center_y -= diff_y / global_zoom;
+		global_mousedown_coords = [e.clientX, e.clientY];
 		
-		// When there are multiple scroll events,
-		// only redraw every 10 ms
-		if(global_zoom_timeout) clearTimeout(global_zoom_timeout);
-		else draw();
-		global_zoom_timeout = setTimeout(draw,10);
+		
+		input_timeout_draw();
 	}
 	else
 	{
@@ -160,12 +150,7 @@ function input_canvas_mouseweel(e)
 	else
 		global_zoom *= 1.05;
 	
-	// When there are multiple scroll events,
-	// only redraw every 10 ms
-	if(global_zoom_timeout) clearTimeout(global_zoom_timeout);
-	else draw();
-	global_zoom_timeout = setTimeout(draw,10);
-	
+	input_timeout_draw();
 	e.preventDefault();
 }
 

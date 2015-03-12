@@ -221,12 +221,12 @@ function ui_draw_content()
 			canvas.onmousedown = function(e)
 			{
 				global_mousedown_coords = [e.clientX, e.clientY];
+				global_dragged = false;
 			}
 			canvas.onmouseup = function(e)
 			{
 				var old = global_mousedown_coords;
-				if(old[0] == e.clientX && old[1] == e.clientY)
-					input_canvas_mouseclick(e);
+				if(!global_dragged) input_canvas_mouseclick(e);
 				
 				this.style.cursor = "default";
 				global_mousedown_coords = false;

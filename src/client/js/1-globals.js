@@ -54,6 +54,7 @@ var z_base = 1e5;
 
 
 // drag
+var global_dragged = false;
 var global_mousedown_coords = null;
 
 
@@ -81,7 +82,7 @@ var global_colors =
 }
 
 
-var global_zoom_timeout = null;
+var global_timeout_draw = null;
 var global_redraw = false;
 var global_is_drawing = false;
 
