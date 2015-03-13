@@ -5,8 +5,11 @@ window.onkeyup = function(e)
 	var move = 20 / global_zoom;
 	var k = e.keyCode;
 	
-	if(k == 171 || k == 107) return draw(global_zoom *= 1.1); // +
-	if(k == 173 || k == 109) return draw(global_zoom /= 1.1); // -
+	// zoom in
+	if([107,171,187].indexOf(k)>-1) return draw(global_zoom *= 1.1);
+	
+	// zoom out
+	if([109,173,189].indexOf(k)>-1) return draw(global_zoom /= 1.1);
 	
 	// up
 	if([38,75,87].indexOf(k)>-1) return draw(global_center_y+= move);
