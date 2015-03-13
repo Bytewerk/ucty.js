@@ -119,12 +119,8 @@ function input_canvas_mousemove(e)
 		
 		// TODO: remove question box, if already open!
 		
-		var diff_x = e.clientX - old[0];
-		var diff_y = e.clientY - old[1];
-		
-		// var map_width = global_canvas.width / global_zoom
-		global_center_x += diff_x / global_zoom;
-		global_center_y -= diff_y / global_zoom;
+		global_center_x -= (e.clientX - old[0]) / global_zoom;
+		global_center_y += (e.clientY - old[1]) / global_zoom;
 		global_mousedown_coords = [e.clientX, e.clientY];
 		
 		
