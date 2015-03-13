@@ -15,7 +15,7 @@ du temp/ucty_client_and_map.ugly
 echo "--------------------"
 echo "       OUTPUT"
 echo "--------------------"
-du -c out/ucty.bin out/ucty.js
+du -c out/client-data/ucty.bin out/client-data/ucty.js
 echo "--------------------"
 
 

@@ -25,7 +25,7 @@ cut_y1 = $(src_y1)
 #
 .PHONY: all clean ugly
 
-all: out/ucty.bin out/ucty.js out/index_example.html
+all: out/client-data/ucty.bin out/client-data/ucty.js out/client-data/index_example.html
 	src/stats.sh
 
 clean:
@@ -37,21 +37,29 @@ ugly:
 
 
 #
-# OUTPUT FOLDER
+# CLIENT-DATA FOLDER
 #
 
-out/index_example.html: src/client/index_example.html
-	cp src/client/index_example.html out/index_example.html
+out/client-data/index_example.html: src/client/index_example.html
+	mkdir -p out/client-data
+	cp src/client/index_example.html out/client-data/index_example.html
 
-out/ucty.bin: temp/ucty_client_and_map.ugly
-	mkdir -p out
+out/client-data/ucty.bin: temp/ucty_client_and_map.ugly
+	mkdir -p out/client-data
 	lzma -k --stdout temp/ucty_client_and_map.ugly \
-		> out/ucty.bin
+		> out/client-data/ucty.bin
 
-out/ucty.js: temp/unlzma.js
-	mkdir -p out
-	$(uglify) $(uflags) --output out/ucty.js \
+out/client-data/ucty.js: temp/unlzma.js
+	mkdir -p out/client-data
+	$(uglify) $(uflags) --output out/client-data/ucty.js \
 	--mangle sort,eval temp/unlzma.js
+
+
+#
+# ONLINE-DATA FOLDER
+#
+
+# TODO
 
 
 #

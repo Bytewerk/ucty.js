@@ -57,14 +57,8 @@ var z_base = 1e5;
 var global_dragged = false;
 var global_mousedown_coords = null;
 
-
-var global_info   = document.getElementById("info");
-// var global_debug  = document.getElementById("debug");
 var global_canvas;
 var global_c2;
-// var global_canvas = document.getElementById("mapc");
-//var global_c2     = global_canvas.getContext("2d");
-
 
 // type:
 // water,multipolygon,building,area,boundary,wood,,scrub,heath,grassland,tree_row,peak,tree,enforcement,Paketbox,E-Bike-Ladestation

@@ -2,7 +2,7 @@ node_modules
 temp
 out
 stats
-
+config.js
 
 *.osm
 *.geojson
