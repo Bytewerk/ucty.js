@@ -209,7 +209,6 @@ function ui_draw_content()
 			content.appendChild(canvas);
 			global_canvas = canvas;
 			
-			// canvas.onclick = input_canvas_mouseclick;
 			canvas.onmousemove = input_canvas_mousemove;
 			addWheelListener(global_canvas,input_canvas_mouseweel);
 			
@@ -225,13 +224,18 @@ function ui_draw_content()
 			}
 			canvas.onmouseup = function(e)
 			{
-				var old = global_mousedown_coords;
 				if(!global_dragged) input_canvas_mouseclick(e);
 				
 				this.style.cursor = "default";
 				global_mousedown_coords = false;
 			}
-			
+			canvas.onmouseout = function()
+			{
+				// stop dragging when the cursor
+				// goes outside of the map
+				global_dragged = true;
+				canvas.onmouseup();
+			}
 			
 			var msg = document.createElement("pre");
 			ui_setpos(msg, undefined, undefined, 0, 0);

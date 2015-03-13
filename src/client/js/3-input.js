@@ -115,9 +115,8 @@ function input_canvas_mousemove(e)
 	if(old && (old[0] != e.clientX || old[1] != e.clientY))
 	{
 		global_dragged = true;
+		global_selection = false;
 		global_canvas.style.cursor = "all-scroll";
-		
-		// TODO: remove question box, if already open!
 		
 		global_center_x -= (e.clientX - old[0]) / global_zoom;
 		global_center_y += (e.clientY - old[1]) / global_zoom;
