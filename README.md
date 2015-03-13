@@ -7,12 +7,12 @@ openstreetmap in a box (proof of concept)
 ## features (and non-features)
 * convert [`OSM`](http://openstreetmap.org) files into minimal a minimal, `LZMA` compressed and lossy format
 * view the whole map in your browser with a tiny `HTML5` canvas based client
+* stageless, intuitive zoom and drag with mouse and keyboard
 * converter cuts off a given map at a bounding box (`OSM` files contain polygons that reach outside of the given export area)
 * converter automatically combines building and point objects, that have the same location
 * streets are only saved and shown as text, this saves lots of file space (orientation with buildings is good enough)
 * no rotated text (faster rendering, less complicated code!). Instead long names get shortened, you'll see the full name by hovering the polygons with the mouse.
 * required server: any `HTTPD` will do, that can host two files statically ;)
-
 
 ## minimalism
 |OSM Size|µcty map incl. HTML5 client|
