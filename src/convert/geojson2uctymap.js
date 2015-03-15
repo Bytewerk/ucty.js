@@ -68,7 +68,7 @@ progress(1, 1);
 console.log("\nEntries: "+output.length
 	+" (of "+input.features.length+")");
 fs.writeFileSync(process.argv[3],
-	"var map="+JSON.stringify(output)+";");
+	"var global_map="+JSON.stringify(output)+";");
 
 
 

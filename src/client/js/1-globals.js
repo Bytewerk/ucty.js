@@ -4,10 +4,12 @@
 	They will not be globals after the script is compiled, because
 	uglify encloses them and all functions in one anonymous object
 	(that executes init() immediatelly).
+	
+	Variables that are also available (generated with the convert scripts):
+		global_map
+		global_qrdata
+	
 */
-
-// The variable 'map' is currently also global.
-// It does not have a prefix yet.
 
 var global_enhanced_map;
 var global_polys = [];

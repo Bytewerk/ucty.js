@@ -100,12 +100,12 @@ function init_enhance_map()
 	var ret = [];
 	
 	// add the surface size to each map element
-	for(var i=0;i<map.length;i++)
+	for(var i=0;i<global_map.length;i++)
 	{	
-		var is_line = (typeof map[i][2][0] == "number"); // bool
+		var is_line = (typeof global_map[i][2][0] == "number"); // bool
 		
-		var entry = is_line ? init_enhance_line(map[i])
-			: init_enhance_polygon(map[i]);
+		var entry = is_line ? init_enhance_line(global_map[i])
+			: init_enhance_polygon(global_map[i]);
 		
 		if(entry.name)
 		{
