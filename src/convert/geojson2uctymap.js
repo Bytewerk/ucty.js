@@ -8,7 +8,7 @@ if(process.argv.length < 8)
 var fs         = require("fs");
 var file       = process.argv[2];
 var cutoff     = [process.argv[4], process.argv[5], process.argv[6], process.argv[7]];
-var conv_entry = require("./convert_entry.js");
+var conv_entry = require("./lib/convert_entry.js");
 
 console.log("loading "+file+"...");
 var input	= JSON.parse(fs.readFileSync(file));

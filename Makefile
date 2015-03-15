@@ -81,10 +81,14 @@ temp/ucty_client_and_map.js: temp/ucty_map.js src/client/js/*
 	cat temp/ucty_map.js src/client/js/* > temp/ucty_client_and_map.js
 	sed -i 's/"use strict";//g' temp/ucty_client_and_map.js
 
-temp/ucty_map.js: temp/map.geojson src/convert/*
-	$(node) src/convert/main.js \
+temp/ucty_map.js: temp/map.geojson src/convert/geojson2uctymap.js src/convert/lib/*
+	$(node) src/convert/geojson2uctymap.js \
 		temp/map.geojson temp/ucty_map.js \
 		$(cut_x0) $(cut_y0) $(cut_x1) $(cut_y1)
+
+temp/ucty_qr.js: src/convert/url2uctyqr.js src/convert/lib/*
+	$(node) src/convert/url2uctyqr.js temp/ucty_qr.js
+
 
 temp/map.geojson : input/map.osm
 	mkdir -p temp
