@@ -1,9 +1,25 @@
 /*
-	This scripts converts an URL into a 'QR ucty' map (just a bunch of
-	polygons, so we can use the same functions for drawing like with the
-	regular map and save some space again).
+	This scripts converts an URL into the 'QR ucty' format.
 	
+	var global_qrdata =
+	[
+		[1, 0, 1, 1, ...], // 1st line
+		... // other lines
+	];
 */
-var qr = require("../qrcode/tz_qr_encoder");
 
-console.log(qr.get_array("http://bytewerk.org"));
+var fs  = require("fs");
+var qr  = require("../qrcode/tz_qr_encoder");
+var cfg = require("../../cfg/config.js");
+var url = cfg.online_url;
+var out = "temp/qrdata.js";
+
+
+fs.writeFileSync
+(
+	out,
+	"var global_qrdata="
+	+ JSON.stringify(qr.get_array(url))
+	+";"
+);
+console.log("Encoded QR for URL: " + url);

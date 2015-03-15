@@ -4,10 +4,10 @@
 // http://ucty.oakey-dev.eu/offline-lib
 
 // page that can be opened on other devices, that have internet
-var cfg_online_url = "http://ucty.oakey-dev.eu/online-data/map.html";
+exports.online_url = "http://ucty.oakey-dev.eu/online-data/map.html";
 
 // location of the online library
-var cfg_online_lib = "http://ucty.oakey-dev.eu/online-data/";
+exports.online_lib = "http://ucty.oakey-dev.eu/online-data/";
 
 
 /*

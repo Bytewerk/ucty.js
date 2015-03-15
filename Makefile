@@ -7,11 +7,11 @@ uglify = ./node_modules/uglify-js/bin/uglifyjs
 uflags = --compress unsafe --screw-ie8
 
 
+# TODO: move this to config.js:
 src_x0 = 11.3638
 src_x1 = 11.4617
 src_y0 = 48.7313
 src_y1 = 48.7906
-
 
 # Coordinates of the area that will be cut out.
 cut_x0 = $(src_x0)
@@ -21,11 +21,11 @@ cut_y1 = $(src_y1)
 
 
 #
-# PHONY TARGETS
+# FAKE TARGETS
 #
 .PHONY: all clean ugly
 
-all: out/client-data/ucty.bin out/client-data/ucty.js out/client-data/index_example.html
+all: cfg/config.js out/client-data/ucty.bin out/client-data/ucty.js out/client-data/index_example.html
 	src/stats.sh
 
 clean:
@@ -34,6 +34,10 @@ clean:
 ugly:
 	rm out/ucty.js temp/*.ugly || true
 	make
+
+cfg/config.js:
+	$(info ERROR: Please create cfg/config.js first! See also: src/config.sample.js)
+	exit 1
 
 
 #
@@ -77,8 +81,8 @@ temp/ucty_client_and_map.ugly: temp/ucty_client_and_map.js
 		--mangle sort,toplevel,eval \
 		temp/ucty_client_and_map.js
 
-temp/ucty_client_and_map.js: temp/ucty_map.js src/client/js/*
-	cat temp/ucty_map.js src/client/js/* > temp/ucty_client_and_map.js
+temp/ucty_client_and_map.js: temp/qrdata.js temp/ucty_map.js src/client/js/*
+	cat temp/qrdata.js temp/ucty_map.js src/client/js/* > temp/ucty_client_and_map.js
 	sed -i 's/"use strict";//g' temp/ucty_client_and_map.js
 
 temp/ucty_map.js: temp/map.geojson src/convert/geojson2uctymap.js src/convert/lib/*
@@ -86,8 +90,9 @@ temp/ucty_map.js: temp/map.geojson src/convert/geojson2uctymap.js src/convert/li
 		temp/map.geojson temp/ucty_map.js \
 		$(cut_x0) $(cut_y0) $(cut_x1) $(cut_y1)
 
-temp/ucty_qr.js: src/convert/url2uctyqr.js src/convert/lib/*
-	$(node) src/convert/url2uctyqr.js temp/ucty_qr.js
+temp/qrdata.js: cfg/config.js src/convert/url2uctyqr.js src/qrcode/tz_qr_encoder.js
+	mkdir -p temp
+	$(node) src/convert/url2uctyqr.js
 
 
 temp/map.geojson : input/map.osm
