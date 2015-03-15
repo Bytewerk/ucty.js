@@ -201,7 +201,7 @@ function ui_draw_qrcode()
 	c2.clearRect(0,0,canvas.width,canvas.height);
 	c2.fillStyle="black";
 	
-	var size = canvas.width > canvas.height ? canvas.height : canvas.width;
+	var size = canvas.width;
 	var size_px = size / qr.length;
 	
 	for(var y=0;y<qr.length;y++)
@@ -211,6 +211,7 @@ function ui_draw_qrcode()
 		{
 			if(line[x])
 			{
+				// draw sharp pixels!
 				var bbox =
 				[
 					Math.floor(x*size_px)+0.5,
