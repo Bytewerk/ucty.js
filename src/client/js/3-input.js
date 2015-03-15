@@ -191,9 +191,9 @@ function input_resize()
 		else
 		{
 			// put the qrcode below the text
-			var qr_width = h - 300;
+			var qr_width = h - 200;
 			ui_setpos(global_qrtext, 50, 50, 50, qr_width + 50);
-			ui_setpos(global_qrcanvas, 50, 200, 50, 50);
+			ui_setpos(global_qrcanvas, 50, 150, 50, 50);
 			
 			global_qrcanvas.width  = qr_width;
 			global_qrcanvas.height = qr_width;
