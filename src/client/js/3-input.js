@@ -178,7 +178,6 @@ function input_resize()
 		
 		if(w > 1.5*h)
 		{
-			console.log("wide.");
 			var qr_width = h - 100;
 			
 			// widescreen: display text and qrcode next to each other!
@@ -191,7 +190,6 @@ function input_resize()
 		}
 		else
 		{
-			console.log("not wide.");
 			// put the qrcode below the text
 			var qr_width = h - 300;
 			ui_setpos(global_qrtext, 50, 50, 50, qr_width + 50);
