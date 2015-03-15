@@ -58,6 +58,7 @@ function ui_draw_tabs()
 		{
 			global_tab_active_element = this;
 			ui_draw_tabs();
+			input_resize();
 		}
 		
 		global_tab_content[i].style.display = a ? "block" : "none";
@@ -191,6 +192,46 @@ function ui_draw_x()
 	}
 }
 
+
+function ui_draw_qrcode()
+{
+	var canvas = global_qrcanvas;
+	var c2 = canvas.getContext('2d');
+	var qr = global_qrdata;
+	c2.clearRect(0,0,canvas.width,canvas.height);
+	c2.fillStyle="black";
+	
+	var size = canvas.width > canvas.height ? canvas.height : canvas.width;
+	var size_px = size / qr.length;
+	
+	for(var y=0;y<qr.length;y++)
+	{
+		var line = qr[y];
+		for(var x=0;x<line.length;x++)
+		{
+			if(line[x])
+			{
+				var bbox =
+				[
+					Math.floor(x*size_px)+0.5,
+					Math.floor(y*size_px)+0.5,
+					Math.floor((x+1)*size_px)+0.5,
+					Math.floor((y+1)*size_px)+0.5
+				];
+				
+				c2.beginPath();
+				c2.moveTo(bbox[0], bbox[1]);
+				c2.lineTo(bbox[2], bbox[1]);
+				c2.lineTo(bbox[2], bbox[3]);
+				c2.lineTo(bbox[0], bbox[3]);
+				c2.closePath();
+				c2.stroke();
+				c2.fill();
+			}
+		}
+	}
+}
+
 function ui_draw_content()
 {
 	for(var is_online=0;is_online<2;is_online++)
@@ -202,7 +243,25 @@ function ui_draw_content()
 		global_ui_main.appendChild(content);
 		global_tab_content[is_online] = content;
 		
-		if(!is_online)
+		if(is_online)
+		{
+			global_qrtext = document.createElement("div");
+			ui_setpos(global_qrtext, 50,50,50);
+			global_qrtext.innerHTML="Eine detailierte Karte kann mit einem zweiten Gerät online angezeigt werden:";
+			
+			global_qrtext.innerHTML+="<br><br>URL HERE";
+			global_qrtext.fontSize = ui_font_big;
+			
+			// TODO: add retry link
+			global_qrcanvas = document.createElement("canvas");
+			
+			
+			content.appendChild(global_qrcanvas);
+			content.appendChild(global_qrtext);
+			
+			input_resize();
+		}
+		else
 		{
 			var canvas = document.createElement("canvas");
 			ui_setpos(canvas, 0,0,0,0);

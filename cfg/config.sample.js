@@ -20,4 +20,6 @@ exports.online_lib = "http://ucty.oakey-dev.eu/online-data/";
 	global_colors
 	
 	"µ"-variable
+	
+	TODO: add all text strings
 */

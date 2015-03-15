@@ -160,11 +160,48 @@ function input_canvas_mouseclick(e)
 }
 
 function input_resize()
-{
-	if(!global_canvas) return;
-	global_canvas.width  = global_tab_content[0].clientWidth;
-	global_canvas.height = global_tab_content[0].clientHeight;
-	draw();
+{	
+	if(global_tab_active_element == global_tabs[0] && global_c2)
+	{
+		// offline map
+		global_canvas.width  = global_tab_content[0].clientWidth;
+		global_canvas.height = global_tab_content[0].clientHeight;
+		draw();
+	}
+	
+	if(global_tab_active_element == global_tabs[1] && global_qrcanvas)
+	{
+		// online map
+		var w = global_tab_content[1].clientWidth;
+		var h = global_tab_content[1].clientHeight;
+		
+		
+		if(w > 1.5*h)
+		{
+			console.log("wide.");
+			var qr_width = h - 100;
+			
+			// widescreen: display text and qrcode next to each other!
+			
+			ui_setpos(global_qrtext, 50, 50, qr_width + 100, 50);
+			ui_setpos(global_qrcanvas, w -qr_width -50, 50, 50, 50);
+			
+			global_qrcanvas.width  = qr_width;
+			global_qrcanvas.height = qr_width;
+		}
+		else
+		{
+			console.log("not wide.");
+			// put the qrcode below the text
+			var qr_width = h - 300;
+			ui_setpos(global_qrtext, 50, 50, 50, qr_width + 50);
+			ui_setpos(global_qrcanvas, 50, 200, 50, 50);
+			
+			global_qrcanvas.width  = qr_width;
+			global_qrcanvas.height = qr_width;
+		}
+		ui_draw_qrcode();
+	}
 }
 window.onresize = input_resize;
 

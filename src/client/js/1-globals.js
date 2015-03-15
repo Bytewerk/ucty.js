@@ -54,6 +54,8 @@ var ui_color_alt  = "#ffb400";
 var ui_font_big   = "15pt";
 var z_base = 1e5;
 
+var global_qrcanvas;
+var global_qrtext;
 
 // drag
 var global_dragged = false;
