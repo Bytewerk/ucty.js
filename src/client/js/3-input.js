@@ -6,22 +6,22 @@ window.onkeyup = function(e)
 	var k = e.keyCode;
 	
 	// zoom in
-	if([107,171,187].indexOf(k)>-1) return draw(global_zoom *= 1.1);
+	if([107,171,187].indexOf(k)>-1) draw(global_zoom *= 1.1);
 	
 	// zoom out
-	if([109,173,189].indexOf(k)>-1) return draw(global_zoom /= 1.1);
+	if([109,173,189].indexOf(k)>-1) draw(global_zoom /= 1.1);
 	
 	// up
-	if([38,75,87].indexOf(k)>-1) return draw(global_center_y+= move);
+	if([38,75,87].indexOf(k)>-1) draw(global_center_y+= move);
 	
 	// down
-	if([40,74,83].indexOf(k)>-1) return draw(global_center_y-= move);
+	if([40,74,83].indexOf(k)>-1) draw(global_center_y-= move);
 	
 	// left
-	if([37,72,65].indexOf(k)>-1) return draw(global_center_x-= move);
+	if([37,72,65].indexOf(k)>-1) draw(global_center_x-= move);
 	
 	// right
-	if([39,76,68].indexOf(k)>-1) return draw(global_center_x+= move);
+	if([39,76,68].indexOf(k)>-1) draw(global_center_x+= move);
 };
 
 
