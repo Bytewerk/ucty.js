@@ -10,6 +10,7 @@
 		global_qrdata
 	
 */
+var global_online_script_loaded = false;
 
 var global_enhanced_map;
 var global_polys = [];

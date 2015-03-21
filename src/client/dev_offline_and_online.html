@@ -1,0 +1,39 @@
+<!DOCTYPE HTML>
+<meta charset="utf-8"> 
+<html>
+	<body>
+		<font color="red">UNCOMPRESSED DEV VERSION (OFFLINE AND ONLINE CODE)!</font>
+		
+		<br>
+		<a href="dev_offline.html">(open offline code)</a>
+		<br>
+		
+		<input id="long" placeholder="long">
+		<input id="lat"  placeholder="lat">
+		<input id="btn" type="button" value="Gimme a map already!"
+			onclick="ucty()" >
+		
+		<br>
+		<a href="http://openstreetmap.org/copyright"
+			style="font-size: 9pt;color: black" >OSM Terms</a>
+	</body>
+	<!-- map & qr code -->
+	<script>var µ = ["btn","long","lat"];</script>
+	<script src="../../temp/ucty_map.js"></script>
+	<script src="../../temp/qrdata.js"></script>
+	
+	<!-- offline code -->
+	<script src="js/0-wheel.js"></script>
+	<script src="js/1-globals.js"></script>
+	<script src="js/2-draw.js"></script>
+	<script src="js/3-input.js"></script>
+	<script src="js/4-init-ui.js"></script>
+	
+	<!-- online code TODO: add code for XHR loading - but only,
+		if global_online_script_loaded is false -->
+	<script src="js-online/9-init.js"></script>
+	
+	<!-- offline code init here, so it doesn't try to load
+		the online code from the internet in this development page-->
+	<script src="js/5-init.js"></script>
+</html>
