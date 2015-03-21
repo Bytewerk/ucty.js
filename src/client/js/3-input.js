@@ -159,6 +159,7 @@ function input_canvas_mouseclick(e)
 	draw();
 }
 
+// FIXME: rename function - redraw_content() or something?
 function input_resize()
 {	
 	if(global_tab_active_element == global_tabs[0] && global_c2)
@@ -179,7 +180,7 @@ function input_resize()
 		{
 			// We actually have an internet connection, so
 			// load the online map!
-			online_draw();
+			online_resize();
 		}
 		else
 		{

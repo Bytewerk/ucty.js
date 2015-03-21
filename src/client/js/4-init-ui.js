@@ -1,6 +1,7 @@
 "use strict";
 
 
+// also used by online code!
 function ui_setpos(element, left, top, right, bottom, z)
 {
 	element.style.position = "absolute";
