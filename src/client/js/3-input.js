@@ -171,34 +171,50 @@ function input_resize()
 	
 	if(global_tab_active_element == global_tabs[1] && global_qrcanvas)
 	{
+		global_qrtext.style.display =
+			global_online_script_loaded ? "none" : "block";
+		
 		// online map
-		var w = global_tab_content[1].clientWidth;
-		var h = global_tab_content[1].clientHeight;
-		
-		
-		if(w > 1.5*h)
+		if(global_online_script_loaded) // 
 		{
-			var qr_width = h - 100;
-			
-			// widescreen: display text and qrcode next to each other!
-			
-			ui_setpos(global_qrtext, 50, 50, qr_width + 100, 50);
-			ui_setpos(global_qrcanvas, w -qr_width -50, 50, 50, 50);
-			
-			global_qrcanvas.width  = qr_width;
-			global_qrcanvas.height = qr_width;
+			// We actually have an internet connection, so
+			// load the online map!
+			online_draw();
 		}
 		else
 		{
-			// put the qrcode below the text
-			var qr_width = h - 200;
-			ui_setpos(global_qrtext, 50, 50, 50, qr_width + 50);
-			ui_setpos(global_qrcanvas, 50, 150, 50, 50);
+			/*
+				No internet connection!
+				Just draw a QR code and info text.
+			*/
+			var w = global_tab_content[1].clientWidth;
+			var h = global_tab_content[1].clientHeight;
 			
-			global_qrcanvas.width  = qr_width;
-			global_qrcanvas.height = qr_width;
+			
+			if(w > 1.5*h)
+			{
+				var qr_width = h - 100;
+				
+				// widescreen: display text and qrcode next to each other!
+				
+				ui_setpos(global_qrtext, 50, 50, qr_width + 100, 50);
+				ui_setpos(global_qrcanvas, w -qr_width -50, 50, 50, 50);
+				
+				global_qrcanvas.width  = qr_width;
+				global_qrcanvas.height = qr_width;
+			}
+			else
+			{
+				// put the qrcode below the text
+				var qr_width = h - 200;
+				ui_setpos(global_qrtext, 50, 50, 50, qr_width + 50);
+				ui_setpos(global_qrcanvas, 50, 150, 50, 50);
+				
+				global_qrcanvas.width  = qr_width;
+				global_qrcanvas.height = qr_width;
+			}
+			ui_draw_qrcode();
 		}
-		ui_draw_qrcode();
 	}
 }
 window.onresize = input_resize;
