@@ -36,7 +36,7 @@ ugly:
 	make
 
 cfg/config.js:
-	$(info ERROR: Please create cfg/config.js first! See also: src/config.sample.js)
+	$(info ERROR: Please create cfg/config.js first! See also: cfg/config.sample.js)
 	exit 1
 
 
